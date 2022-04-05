@@ -9,19 +9,20 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
+    <header>
+      <h1>MVC DV1609</h1>
+    </header>
 
-    <nav class="navbar">
-      <span class="navbar-toggle" id="js-navbar-toggle"></span>
-      <a href="#" class="logo">logo</a>
-      <ul class="main-nav" id="js-menu">
+    <nav class="nav-bar" id="nav-bar">
+      <ul>
         <li>
-          <a href="{{ url("home") }}" class="nav-links">Home</a>
+          <a href="{{url("home")}}">Home</a>
         </li>
         <li>
-          <a href="{{ path("about") }}" class="nav-links">About</a>
+          <a href="{{path("about")}}">About</a>
         </li>
-        <li>
-          <a href="{{ path("report")}}" class="nav-links">Report</a>
+         <li>
+          <a href="{{path("report")}}">Report</a>
         </li>
       </ul>
     </nav>
@@ -31,9 +32,9 @@
     {% endblock %}
 
     <div class="sitefooter">
-      Site footer with details
+      <p>Skapad utav Frida i BTHs MVC kurs</p>
     </div>
 
-    <script src="/js/main.js"></script>
+    <script src="js/main.js"></script>
   </body>
 </html>
