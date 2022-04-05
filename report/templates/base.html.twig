@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      {% block title %}Welcome!{% endblock %}
+    </title>
+    {# <link rel="icon" href="favicon.ico"> #}
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+
+    <nav class="navbar">
+      <span class="navbar-toggle" id="js-navbar-toggle"></span>
+      <a href="#" class="logo">logo</a>
+      <ul class="main-nav" id="js-menu">
+        <li>
+          <a href="{{ url("home") }}" class="nav-links">Home</a>
+        </li>
+        <li>
+          <a href="{{ path("about") }}" class="nav-links">About</a>
+        </li>
+        <li>
+          <a href="{{ path("report")}}" class="nav-links">Report</a>
+        </li>
+      </ul>
+    </nav>
+
+    {% block content %}
+      Default content
+    {% endblock %}
+
+    <div class="sitefooter">
+      Site footer with details
+    </div>
+
+    <script src="/js/main.js"></script>
+  </body>
+</html>
