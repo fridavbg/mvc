@@ -103,6 +103,23 @@ nav ul li a:hover {
     box-shadow: var(--light-green) 0px 20px 30px -10px;
 }
 
+/* LINKS */
+.standard-link {
+    font-family: Font;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 1em;
+    border-radius: 12px;
+    color: var(--light-text);
+    box-shadow: var(--accent) 0px 20px 30px -10px;
+}
+
+.standard-link:hover {
+    background-color: var(--dark-bkg);
+    border-radius: 12px;
+    padding: 1em;
+}
+
 /* TYPOGRAPHY */
 
 @font-face {
