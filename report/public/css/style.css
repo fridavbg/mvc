@@ -182,13 +182,22 @@ p {
 
 /* FORN */
 
-.msg {
+.errorMsg {
     border: solid red 2px;
     font-family: Title;
     padding: 30px;
     font-size: 25px;
-    margin-bottom: 12px;
+    margin: 12px;
     box-shadow: 0 5px 0 rgb(233, 17, 17);
+}
+
+.infoMsg {
+    border: solid blue 2px;
+    font-family: Title;
+    padding: 30px;
+    font-size: 25px;
+    margin: 12px;
+    box-shadow: 0 5px 0 rgb(8, 8, 236);
 }
 
 legend {
@@ -200,7 +209,28 @@ legend {
     font-family: Title;
 }
 
+.btn-container {
+    display: flex;
+    flex-direction: column;
+}
 
+.btn {
+    font-family: Font;
+    font-size: small;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 1em;
+    border-radius: 5px;
+    color: var(--light-text);
+    box-shadow: var(--accent) 0px 10px 15px -5px;
+    background-color: var(--accent);
+}
+
+.btn:hover {
+        background-color: var(--dark-bkg);
+        border-radius: 12px;
+        padding: 1em;
+    }
 
 /* FOOTER */
 .sitefooter {
