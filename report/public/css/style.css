@@ -182,6 +182,15 @@ p {
 
 /* FORN */
 
+.msg {
+    border: solid red 2px;
+    font-family: Title;
+    padding: 30px;
+    font-size: 25px;
+    margin-bottom: 12px;
+    box-shadow: 0 5px 0 rgb(233, 17, 17);
+}
+
 legend {
     text-decoration: underline;
     font-size: 20px;
