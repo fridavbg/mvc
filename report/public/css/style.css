@@ -106,12 +106,14 @@ nav ul li a:hover {
 /* LINKS */
 .standard-link {
     font-family: Font;
+    font-size: medium;
     text-decoration: none;
     cursor: pointer;
     padding: 1em;
     border-radius: 12px;
     color: var(--light-text);
     box-shadow: var(--accent) 0px 20px 30px -10px;
+    background-color: var(--accent);
 }
 
 .standard-link:hover {
@@ -121,7 +123,6 @@ nav ul li a:hover {
 }
 
 /* TYPOGRAPHY */
-
 @font-face {
     font-family: Title;
     src: url('../fonts/Architects_Daughter/ArchitectsDaughter-Regular.ttf') format('truetype');
@@ -178,6 +179,19 @@ p {
     font-family: Font;
     border-radius: 12px;
 }
+
+/* FORN */
+
+legend {
+    text-decoration: underline;
+    font-size: 20px;
+    color: var(--light-grey);
+    letter-spacing: 0.1em;
+    margin-top: 1em;    
+    font-family: Title;
+}
+
+
 
 /* FOOTER */
 .sitefooter {
