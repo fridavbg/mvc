@@ -21,7 +21,7 @@ body {
     font-family: "Arvo", serif;
 }
 
-/* HEADER & NAV BAR */
+/* HEADER */
 header {
     height: 60vh;
     background: url("../img/headerbkg_1.jpg") bottom center no-repeat;
@@ -37,10 +37,10 @@ header h1 {
     opacity: 0.8;
     padding: 18px;
     border-radius: 12px;
-    color: var(--green-text)
-    font-family: Title;
+    color: var(--green-text) font-family: Title;
 }
 
+/* NAVBAR */
 .nav-bar-color {
     background-image: var(--gradient-green) !important;
 }
@@ -89,9 +89,59 @@ nav a {
 nav ul li a:hover {
     color: var(--blue);
     border: 0.5px solid var(--light-text);
-    transform: rotate(60deg);
     border-radius: 12px;
 }
+
+/* NAVBAR DROPDOWN */
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    font-size: 16px;
+    text-transform: uppercase;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: inherit;
+    font-family: Title;
+    padding: 20px;
+    margin: 0;
+}
+
+.navbar a:hover,
+.dropdown:hover .dropbtn {
+    color: var(--blue);
+    border: 0.5px solid var(--light-text);
+    border-radius: 12px;}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
 
 /* IMAGES */
 .me-img {
@@ -99,6 +149,7 @@ nav ul li a:hover {
     width: 200px;
     box-shadow: var(--accent) 0px 20px 30px -10px;
 }
+
 .me-img:hover {
     box-shadow: var(--light-green) 0px 20px 30px -10px;
 }
@@ -127,6 +178,7 @@ nav ul li a:hover {
     font-family: Title;
     src: url('../fonts/Architects_Daughter/ArchitectsDaughter-Regular.ttf') format('truetype');
 }
+
 @font-face {
     font-family: Font;
     src: url('../fonts/Arvo/Arvo-Regular.ttf');
@@ -155,8 +207,8 @@ h2 {
     border: 1px solid var(--purple);
     border-radius: 12px;
     box-shadow:
-    rgba(0, 0, 0, 0.3) 5px 19px 38px,
-    rgba(0, 0, 0, 0.22) 5px 15px 12px;
+        rgba(0, 0, 0, 0.3) 5px 19px 38px,
+        rgba(0, 0, 0, 0.22) 5px 15px 12px;
     font-family: Title;
 }
 
@@ -165,7 +217,7 @@ h4 {
     font-size: 20px;
     color: var(--light-grey);
     letter-spacing: 0.1em;
-    margin-top: 1em;    
+    margin-top: 1em;
     font-family: Title;
 }
 
@@ -205,7 +257,7 @@ legend {
     font-size: 20px;
     color: var(--light-grey);
     letter-spacing: 0.1em;
-    margin-top: 1em;    
+    margin-top: 1em;
     font-family: Title;
 }
 
@@ -224,13 +276,14 @@ legend {
     color: var(--light-text);
     box-shadow: var(--accent) 0px 10px 15px -5px;
     background-color: var(--accent);
+    text-transform: uppercase;
 }
 
 .btn:hover {
-        background-color: var(--dark-bkg);
-        border-radius: 12px;
-        padding: 1em;
-    }
+    background-color: var(--dark-bkg);
+    border-radius: 12px;
+    padding: 1em;
+}
 
 /* FOOTER */
 .sitefooter {

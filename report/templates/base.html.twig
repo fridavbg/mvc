@@ -25,14 +25,14 @@
         <li>
           <a href="{{path("report")}}">Report</a>
         </li>
-          <li>
-          <a href="{{path("form-search")}}">Search</a>
-        </li>
-          <li>
-          <a href="{{path("form-login")}}">Log In</a>
-        </li>
-        <li>
-          <a href="{{path("form-session")}}">Session</a>
+        <li class="dropdown">
+    <button class="dropbtn">Form 
+    </button>
+    <div class="dropdown-content">
+        <a href="{{path("form-search")}}">Search</a>
+        <a href="{{path("form-login")}}">Log In</a>
+        <a href="{{path("form-session")}}">Session</a>
+        </div>
         </li>
       </ul>
     </nav>
