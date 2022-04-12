@@ -21,7 +21,14 @@ body {
     font-family: "Arvo", serif;
 }
 
+/* EXTRA  */
+
+.x-margin-top {
+    margin-top: 12rem;
+}
+
 /* HEADER */
+
 header {
     height: 60vh;
     background: url("../img/headerbkg_1.jpg") bottom center no-repeat;
@@ -101,6 +108,7 @@ nav ul li a:hover {
 .dropdown .dropbtn {
     font-size: 16px;
     text-transform: uppercase;
+    text-shadow: var(--dark-bkg) 0px 0px 10px;
     border: none;
     outline: none;
     color: white;

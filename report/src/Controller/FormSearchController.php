@@ -21,5 +21,4 @@ class FormSearchController extends AbstractController
 
         return $this->render('form/search.html.twig', $data);
     }
-
 }
