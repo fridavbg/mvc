@@ -4,19 +4,19 @@
 
 {% block content %}
 
-<form method="post">
+  <form method="post">
     <fieldset>
-    <legend>A dice hand</legend>
+      <legend>A dice hand</legend>
 
-    <p>
-        <input type="submit" name="roll" value="Roll">
-        <input type="submit" name="add" value="Add">
-        <input type="submit" name="clear" value="Clear">
-    </p>
+      <p class="btn-container">
+        <input type="submit" name="roll" value="Roll" class="btn">
+        <input type="submit" name="add" value="Add" class="btn">
+        <input type="submit" name="clear" value="Clear" class="btn">
+      </p>
 
-    {{ include('block/flash-message.html.twig') }}
+      {{ include('block/flash-message.html.twig') }}
 
     </fieldset>
-</form>
+  </form>
 
 {% endblock %}

@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="{{ asset("css/style.css") }}"/>
   </head>
   <body>
+  <div>  
     <header>
       <h1>MVC DV1609</h1>
     </header>
-
     <nav class="nav-bar" id="nav-bar">
       <ul>
         <li>
@@ -38,8 +38,19 @@
         <li>
           <a href="{{path("dice-home")}}">Dice</a>
         </li>
+        <li>
+          <a href="{{path("card-home")}}">Card</a>
+        </li>
       </ul>
     </nav>
+  </div>  
+    <div class="arrow-container">
+        <svg class="arrows">
+          <path class="a1" d="M0 0 L30 32 L60 0"></path>
+          <path class="a2" d="M0 20 L30 52 L60 20"></path>
+          <path class="a3" d="M0 40 L30 72 L60 40"></path>
+        </svg>
+    <div>
 
     {% block content %}
       Default content
@@ -49,6 +60,8 @@
       <p>Skapad utav Frida i BTHs MVC kurs</p>
     </div>
 
-    <script src="js/main.js"></script>
+    <script src="../public/js/main.js">
+    {# NOT WORKING!!! #}
+    </script>
   </body>
 </html>

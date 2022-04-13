@@ -3,14 +3,17 @@
 {% block title %}Dice{% endblock %}
 
 {% block content %}
-<h1>{{ title }}</h1>
+  <div class="site-wrap">
+    <h1>{{ title }}</h1>
 
-<p>The dice is rolled {{ numRolls }} times.</p>
+    <p>The dice is rolled
+      {{ numRolls }}
+      times.</p>
 
-<ul>
-    {% for roll in rolls %}
+    <ul>
+      {% for roll in rolls %}
         <li>{{ roll }}</li>
-    {% endfor %}
-</ul>
-
+      {% endfor %}
+    </ul>
+  </div>
 {% endblock %}

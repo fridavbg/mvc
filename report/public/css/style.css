@@ -30,7 +30,7 @@ body {
 /* HEADER */
 
 header {
-    height: 60vh;
+    height: 70vh;
     background: url("../img/headerbkg_1.jpg") bottom center no-repeat;
     background-size: cover;
     display: flex;
@@ -45,6 +45,60 @@ header h1 {
     padding: 18px;
     border-radius: 12px;
     color: var(--green-text) font-family: Title;
+}
+
+/* ARROW-DOWN */
+.arrow-container {
+    padding: 8em;
+}
+
+.arrows {
+	width: 60px;
+	height: 72px;
+	position: absolute;
+	left: 50%;
+	margin-left: -30px;
+	bottom: 20px;
+    z-index: 1;
+}
+
+.arrows path {
+	stroke: #2994D1;
+	fill: transparent;
+	stroke-width: 1px;	
+	animation: arrow 2s infinite;
+	-webkit-animation: arrow 2s infinite; 
+}
+
+@keyframes arrow
+{
+0% {opacity:0}
+40% {opacity:1}
+80% {opacity:0}
+100% {opacity:0}
+}
+
+@-webkit-keyframes arrow /*Safari and Chrome*/
+{
+0% {opacity:0}
+40% {opacity:1}
+80% {opacity:0}
+100% {opacity:0}
+}
+
+.arrows path.a1 {
+	animation-delay:-1s;
+	-webkit-animation-delay:-1s; /* Safari 和 Chrome */
+}
+
+.arrows path.a2 {
+	animation-delay:-0.5s;
+	-webkit-animation-delay:-0.5s; /* Safari 和 Chrome */
+}
+
+.arrows path.a3 {	
+	animation-delay:0s;
+	-webkit-animation-delay:0s; /* Safari 和 Chrome */
 }
 
 /* NAVBAR */
@@ -193,13 +247,9 @@ nav ul li a:hover {
 }
 
 .site-wrap {
-    max-width: 700px;
-    margin: 70px auto;
     background: var(--text);
     padding: 40px;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
-    transform: scale(0.98);
-    transition: transform 0.5s;
     border-radius: 12px;
 }
 
@@ -271,7 +321,7 @@ legend {
 
 .btn-container {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
 }
 
 .btn {
@@ -280,6 +330,7 @@ legend {
     text-decoration: none;
     cursor: pointer;
     padding: 1em;
+    margin: 3px;
     border-radius: 5px;
     color: var(--light-text);
     box-shadow: var(--accent) 0px 10px 15px -5px;
@@ -291,6 +342,43 @@ legend {
     background-color: var(--dark-bkg);
     border-radius: 12px;
     padding: 1em;
+}
+
+
+/* CARD */
+.card-container {
+    display: grid;
+    grid-template-columns: 100px 100px 100px 100px;
+    grid-gap: 12px;
+    justify-content: center;
+    padding-bottom: 12px;
+}
+
+.card {
+    border: 1px solid black;
+    height: 90px;
+    width: 75px;    
+    padding: 1em 1em;
+    border-radius: 5px;
+    box-shadow: 5px 10px;
+    background-color: white;
+    color: black;
+}
+
+.card li {
+    list-style-type: none;
+}
+
+.red-suit {
+    color: red;
+    font-size: 25px;
+    padding-bottom: 3px;
+}
+
+.black-suit {
+    color: black;
+    font-size: 25px;
+    padding-bottom: 3px;
 }
 
 /* FOOTER */

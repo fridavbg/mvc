@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Draw a card{% endblock %}
+
+{% block content %}
+  <div class="site-wrap">
+    <form method="post">
+      <fieldset>
+        <legend>Draw a card</legend>
+
+        <p class="btn-container">
+          <input type="submit" name="draw" value="Draw a card" class="btn">
+          <input type="submit" name="drawMultiple" value="Draw multiple cards" class="btn">
+        </p>
+
+        {# {{ include('block/flash-message.html.twig') }} #}
+
+      </fieldset>
+    </form>
+  </div>
+{% endblock %}
