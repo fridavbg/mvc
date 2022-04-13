@@ -21,7 +21,7 @@ class Deck
         );
         $this->leftOverCards = [];
 
-        /** 
+        /**
          * Loop through to create Deck of cards
          */
         foreach ($suits as $suit) {
@@ -76,9 +76,9 @@ class Deck
      * @param $cardToBeRemoved int
      * @return array
      */
-    public function updateLeftOverDeck($leftOverCards,$cardToBeRemoved){
-
-        $updatedDeck = array_diff($leftOverCards,$cardToBeRemoved);
+    public function updateLeftOverDeck($leftOverCards, $cardToBeRemoved)
+    {
+        $updatedDeck = array_diff($leftOverCards, $cardToBeRemoved);
         $this->leftOverCards = $updatedDeck;
         return $this->leftOverCards;
     }

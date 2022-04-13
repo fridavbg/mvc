@@ -39,7 +39,7 @@ class Card
      * Shows card value
      * @return string
      */
-    public function getValue() 
+    public function getValue()
     {
         return $this->value;
     }
@@ -48,7 +48,7 @@ class Card
      * Show card suit
      * @return string
      */
-    public function getSuite() 
+    public function getSuite()
     {
         return $this->suit;
     }

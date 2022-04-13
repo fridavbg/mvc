@@ -34,5 +34,3 @@ composer csfix          -- Fix
 composer phpcs          -- Check code standard
 composer phpcbf         -- Correct code standard
 ```
-
-
