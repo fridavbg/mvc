@@ -354,6 +354,12 @@ legend {
     padding-bottom: 12px;
 }
 
+.single-card-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+
 .card {
     border: 1px solid black;
     height: 90px;
@@ -363,6 +369,7 @@ legend {
     box-shadow: 5px 10px;
     background-color: white;
     color: black;
+    align-items: center;
 }
 
 .card li {

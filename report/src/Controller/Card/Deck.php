@@ -68,10 +68,8 @@ class Deck
         return $this->leftOverCards;
     }
 
-
-
     /**
-     * This function remove array of cards that the player took
+     * Removes array of cards that the player took
      * @param $leftOverDeck array
      * @param $cardToBeRemoved int
      * @return array
@@ -96,5 +94,15 @@ class Deck
         } else {
             return false;
         }
+    }
+
+    /**
+     * Grab a random card from deck
+     * @return object
+     */
+    public function getRandomCard()
+    {
+        $deckCards = $this->shuffleDeck();
+            return $deckCards[0];
     }
 }
