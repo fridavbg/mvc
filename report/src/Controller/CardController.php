@@ -54,9 +54,14 @@ class CardController extends AbstractController
     public function draw(): Response
     {
         $deck = new \App\Card\Deck();
+        $currentDeck= $deck->getDeck();
+        $card = $deck->getRandomCards($currentDeck, 1);
+
         $data = [
             'title' => 'Draw a Card',
-            'deck' => $deck->getRandomCard(),
+            'deck' => $currentDeck,
+            'card' => $card,
+            // 'leftOverDeck' => $deck->updateDeckCards($currentDeck, $card),
         ];
         return $this->render('card/draw.html.twig', $data);
     }

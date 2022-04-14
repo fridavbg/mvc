@@ -9,6 +9,7 @@ class Deck
      */
     protected $cards;
     private $leftOverCards;
+
     /**
      * Create a deck of 52 cards
      */
@@ -68,17 +69,17 @@ class Deck
         return $this->leftOverCards;
     }
 
-    /**
-     * Removes array of cards that the player took
-     * @param $leftOverDeck array
-     * @param $cardToBeRemoved int
-     * @return array
+    /** 
+     * Update the deck cards when a player draws a card from the deck
+     * @param $deckCards array
+     * @param $cardToBeRemoved object
+     * @return mixed
      */
-    public function updateLeftOverDeck($leftOverCards, $cardToBeRemoved)
+    public function updateDeckCards($deckCards, $cardToBeRemoved)
     {
-        $updatedDeck = array_diff($leftOverCards, $cardToBeRemoved);
-        $this->leftOverCards = $updatedDeck;
-        return $this->leftOverCards;
+        unset($deckCards[$cardToBeRemoved]);
+        $this->setLeftOverDeck($deckCards);
+        return $this->getLeftOverDeck();
     }
 
     /**
@@ -97,12 +98,23 @@ class Deck
     }
 
     /**
-     * Grab a random card from deck
-     * @return object
+     * Grab N numbers of random cards from deck & update deck
+     * @param $leftOverDeck array
+     * @param $cardToBeRemoved int
+     * @return array
      */
-    public function getRandomCard()
+
+    public function getRandomCards($leftOverDeck, $numberOfCards)
     {
-        $deckCards = $this->shuffleDeck();
-            return $deckCards[0];
+        $playerCard = [];
+        $randomCardsKey = array_rand($leftOverDeck, $numberOfCards);
+        if ($numberOfCards != 1) {
+            foreach ($randomCardsKey as $rand) {
+                $playerCard[] = $leftOverDeck[$rand];
+            }
+        } else {
+            $playerCard[] = $leftOverDeck[$randomCardsKey];
+        }
+        return $playerCard;
     }
 }

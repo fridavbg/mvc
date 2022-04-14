@@ -27,6 +27,10 @@ body {
     margin-top: 12rem;
 }
 
+.code {
+    margin: 12px;
+}
+
 /* HEADER */
 
 header {
