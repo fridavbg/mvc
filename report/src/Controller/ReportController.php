@@ -13,7 +13,10 @@ class ReportController extends AbstractController
      */
     public function home(): Response
     {
-        return $this->render('home.html.twig');
+        $data = [
+            'title' => 'Home'
+        ];
+        return $this->render('home.html.twig', $data);
     }
 
     /**
