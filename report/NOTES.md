@@ -34,3 +34,10 @@ composer csfix          -- Fix
 composer phpcs          -- Check code standard
 composer phpcbf         -- Correct code standard
 ```
+
+# PHP built in webserver
+You can open the PHP built in webserver to verify the installation.
+
+```
+php -S localhost:8888 -t public
+```

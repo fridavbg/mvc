@@ -18,20 +18,4 @@ class ReportController extends AbstractController
         ];
         return $this->render('home.html.twig', $data);
     }
-
-    /**
-     * @Route("/about", name="about")
-     */
-    public function about(): Response
-    {
-        return $this->render('about.html.twig');
-    }
-
-    /**
-     * @Route("/report", name="report")
-     */
-    public function report(): Response
-    {
-        return $this->render('report.html.twig');
-    }
 }
