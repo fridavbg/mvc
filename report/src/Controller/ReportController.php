@@ -14,7 +14,7 @@ class ReportController extends AbstractController
     public function home(): Response
     {
         $data = [
-            'title' => 'HOME'
+            'title' => 'Home'
         ];
         return $this->render('home.html.twig', $data);
     }
