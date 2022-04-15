@@ -53,7 +53,7 @@ header h1 {
 
 /* ARROW-DOWN */
 .arrow-container {
-    padding: 8em;
+    padding: 2em;
 }
 
 .arrows {
@@ -253,6 +253,7 @@ nav ul li a:hover {
 .site-wrap {
     background: var(--text);
     padding: 40px;
+    margin: 6em;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
     border-radius: 12px;
 }
@@ -394,19 +395,13 @@ legend {
 
 /* FOOTER */
 .sitefooter {
-    align-items: center;
     background-image: var(--gradient-green);
-    bottom: 0;
-    color: var(--text);
-    display: flex;
-    font-size: 1em;
-    height: 80px;
-    justify-content: center;
-    position: relative;
+    top: 0;
     width: 100%;
+    transition: all 0.5s;
+    position: relative;
     z-index: 1;
-    border-radius: 12px;
-    margin-top: 2em;
+    margin-bottom: 1em;
 }
 
 .sitefooter p {
