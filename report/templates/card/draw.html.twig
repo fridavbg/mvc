@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Draw a card{% endblock %}
+{% block title %}{{title}}{% endblock %}
 
 {% block content %}
     <div class="site-wrap">
@@ -35,7 +35,8 @@
 
             <code class="code">
                 <h2>TEST BOX</h2>
-                {{dump(card)}}
+                {# {{dump(card)}} #}
+                {{dump(leftOverDeck)}}
             </code>
 
         <div class="btn-container">

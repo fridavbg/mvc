@@ -77,9 +77,9 @@ class Deck
      */
     public function updateDeckCards($deckCards, $cardToBeRemoved)
     {
-        unset($deckCards[$cardToBeRemoved]);
-        $this->setLeftOverDeck($deckCards);
-        return $this->getLeftOverDeck();
+        // unset($deckCards[$cardToBeRemoved]);
+        // $this->setLeftOverDeck($deckCards);
+        return $cardToBeRemoved;
     }
 
     /**
