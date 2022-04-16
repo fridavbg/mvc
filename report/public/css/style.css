@@ -35,7 +35,7 @@ body {
 
 header {
     height: 70vh;
-    background: url("../img/headerbkg_1.jpg") bottom center no-repeat;
+    background: url("../img/headerbkg_1.jpeg") bottom center no-repeat;
     background-size: cover;
     display: flex;
     align-items: center;
