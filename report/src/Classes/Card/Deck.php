@@ -6,9 +6,11 @@ class Deck
 {
     /**
      * @var array representing full deck of cards
+     * @var array representing deck excluding player cards picked
      */
-    protected $cards;
-    private $leftOverCards;
+    protected $cards; // DECK
+    private $leftOverCards; // CARDS LEFT IN DECK
+    protected $cardHand; // CARDS DRAWN
 
     /**
      * Create a deck of 52 cards
@@ -52,6 +54,24 @@ class Deck
     }
 
     /**
+     * Show cardHand
+     * @return array
+     */
+    public function getCardHand()
+    {
+        return $this->cardHand;
+    }
+
+    /**
+     * cardHand Var Setter
+     * @param array $deck
+     */
+    public function setCardHand($cards)
+    {
+        $this->cardHand = $cards;
+    }
+
+    /**
      * leftOverDeck Var Setter
      * @param array $leftOverCards
      */
@@ -67,19 +87,6 @@ class Deck
     public function getLeftOverDeck()
     {
         return $this->leftOverCards;
-    }
-
-    /** 
-     * Update the deck cards when a player draws a card from the deck
-     * @param $deckCards array
-     * @param $cardToBeRemoved object
-     * @return mixed
-     */
-    public function updateDeckCards($deckCards, $cardToBeRemoved)
-    {
-        // unset($deckCards[$cardToBeRemoved]);
-        // $this->setLeftOverDeck($deckCards);
-        return $cardToBeRemoved;
     }
 
     /**
@@ -98,23 +105,19 @@ class Deck
     }
 
     /**
-     * Grab N numbers of random cards from deck & update deck
+     * Grab N numbers of random cards from deck & update cardHand & leftOverDeck
      * @param $leftOverDeck array
-     * @param $cardToBeRemoved int
-     * @return array
+     * @param $numberOfCards int
      */
 
     public function getRandomCards($leftOverDeck, $numberOfCards)
     {
-        $playerCard = [];
-        $randomCardsKey = array_rand($leftOverDeck, $numberOfCards);
-        if ($numberOfCards != 1) {
-            foreach ($randomCardsKey as $rand) {
-                $playerCard[] = $leftOverDeck[$rand];
-            }
-        } else {
-            $playerCard[] = $leftOverDeck[$randomCardsKey];
+        $drawnCards = [];
+        shuffle($leftOverDeck);
+        for ($i = 0; $i < $numberOfCards; $i++) {
+            array_push($drawnCards, array_shift($leftOverDeck));
         }
-        return $playerCard;
+        $this->setCardHand($drawnCards);
+        $this->setLeftOverDeck($leftOverDeck);
     }
 }

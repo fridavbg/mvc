@@ -1,49 +1,55 @@
 {% extends "base.html.twig" %}
 
-{% block title %}{{title}}{% endblock %}
+{% block title %}
+	{{title}}
+{% endblock %}
 
 {% block content %}
-    <div class="site-wrap">
-        <form method="post">
-            <fieldset>
-            <legend>Draw a card</legend>
-            <div class="single-card-container">
-                <ul class="card">
-                {% if card[0].getSuite() == 'H'%}
-                    <li class="red-suit">♥</li>
-                {% elseif card[0].getSuite() == 'S'%}
-                    <li class="black-suit">♠</li>
-                {% elseif card[0].getSuite() == 'C'%}
-                    <li class="black-suit">♣</li>
-                {% else %}
-                    <li class="red-suit">♦</li>
-                {% endif %}
-                <li>{{ card[0].getValue() }}</li>
-                </ul>
-                <h3>Cards left in deck:
-                {{ deck | length }}</h3>
-            </div>
-            <p class="btn-container">
-                <input type="submit" name="draw" value="Draw a new card" class="btn">
-                {# <input type="submit" name="drawMultiple" value="Draw multiple cards" class="btn"> #}
-            </p>
+	<div class="site-wrap">
+		<form method="post">
+			<fieldset>
+				<legend>Draw a card</legend>
+					{% if playerHand | length > 0 %}
+						<div class="card-container">
+						{% for card in playerHand %}
+							<ul class="card">
+								{% if card.getSuite() == 'H'%}
+									<li class="red-suit">♥</li>
+								{% elseif card.getSuite() == 'S'%}
+									<li class="black-suit">♠</li>
+								{% elseif card.getSuite() == 'C'%}
+									<li class="black-suit">♣</li>
+								{% else %}
+									<li class="red-suit">♦</li>
+								{% endif %}
+								<li>{{ card.getValue() }}</li>
+							</ul>
+						{% endfor %}
+					</div>
+					<h3>Cards left in deck:
+						{{ leftOverDeck | length }}
+					</h3>
+				{% endif %}
+				<p class="btn-container">
+					<input
+					type="submit" name="draw" value="Draw a new card" class="btn">
+				<input type="submit" name="drawMultiple" value="Draw multiple cards" class="btn">
+				</p>
 
-            {# {{ include('block/flash-message.html.twig') }} #}
+				{# {{ include('block/flash-message.html.twig') }} #}
 
-            </fieldset>
-        </form>
+			</fieldset>
+		</form>
 
-            <code class="code">
-                <h2>TEST BOX</h2>
-                {# {{dump(card)}} #}
-                {{dump(leftOverDeck)}}
-            </code>
+		<code class="code">
+			<h2>TEST BOX</h2>
+			{{dump(playerHand)}}
+			{{dump(leftOverDeck)}}
+		</code>
 
-        <div class="btn-container">
-            <a href="{{path("card-home")}}" class="btn">
-            Go back
-            </a>
-        </div>
+		<div class="btn-container">
+			<a href="{{path("card-home")}}" class="btn">Go back</a>
+		</div>
 
-    </div>
+	</div>
 {% endblock %}

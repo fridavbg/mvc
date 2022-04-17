@@ -51,18 +51,45 @@ class CardController extends AbstractController
     /**
      * @Route("/card/deck/draw", name="card-draw")
      */
+
     public function draw(): Response
     {
         $deck = new \App\Card\Deck();
-        $currentDeck= $deck->getDeck();
-        $card = $deck->getRandomCards($currentDeck, 1);
+        $currentDeck = $deck->getDeck();
+        $numOfCards = 1;
+        $deck->getRandomCards($currentDeck, $numOfCards);
+        $playerHand = $deck->getCardHand();
+        $leftOverDeck = $deck->getLeftOverDeck();
 
         $data = [
             'title' => 'Draw a card',
             'deck' => $currentDeck,
-            'card' => $card,
-            'leftOverDeck' => $deck->updateDeckCards($currentDeck, $card),
+            'playerHand' => $playerHand,
+            'leftOverDeck' => $leftOverDeck,
         ];
         return $this->render('card/draw.html.twig', $data);
     }
+
+    /**
+     * @Route("/card/deck/draw{numOfCards}", name="multiple-card-draw")
+     */
+
+    // public function drawMultiple(int $numOfCards): Response
+    // {
+    //     $deck = new \App\Card\Deck();
+    //     $currentDeck = $deck->getDeck();
+    //     $deck->getRandomCards($currentDeck, $numOfCards);
+    //     $playerHand = $deck->getCardHand();
+    //     $leftOverDeck = $deck->getLeftOverDeck();
+
+    //     $data = [
+    //         'title' => 'Draw Multiple cards',
+    //         'deck' => $currentDeck,
+    //         'playerHand' => $playerHand,
+    //         'leftOverDeck' => $leftOverDeck,
+    //         'numOfCards' => $numOfCards,
+    //     ];
+
+    //     return $this->render('card/draw.html.twig', $data);
+    // }
 }

@@ -9,7 +9,6 @@ class Card
 
     public function __construct($suit, $value)
     {
-        $this->cards = array();
         $suits = array(
             'H' => 'Hearts',
             'C' => 'Clubs',
@@ -44,6 +43,15 @@ class Card
         return $this->value;
     }
 
+    /**
+     * Shows card value
+     * @return string
+     */
+    public function __toString() : string
+    {
+        return $this->value;
+    }
+    
     /**
      * Show card suit
      * @return string
