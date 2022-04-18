@@ -15,7 +15,7 @@ class DiceController extends AbstractController
      */
     public function home(): Response
     {
-        $die = new \App\Dice\Dice();
+        $die = new \App\Classes\Card\Dice\Dice();
         $data = [
             'title' => 'Dice',
             'die_value' => $die->roll(),
@@ -31,7 +31,7 @@ class DiceController extends AbstractController
 
     public function roll(int $numRolls): Response
     {
-        $die = new \App\Dice\Dice();
+        $die = new \App\Classes\Card\Dice\Dice();
 
         $rolls = [];
         for ($i = 1; $i <= $numRolls; $i++) {

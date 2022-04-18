@@ -28,7 +28,7 @@ class CardController extends AbstractController
      */
     public function deck(): Response
     {
-        $deck = new \App\Card\Deck();
+        $deck = new \App\Classes\Card\Deck();
         $data = [
             'title' => 'Deck',
             'deck' => $deck->getDeck()
@@ -41,7 +41,7 @@ class CardController extends AbstractController
      */
     public function shuffle(): Response
     {
-        $deck = new \App\Card\Deck();
+        $deck = new \App\Classes\Card\Deck();
 
         $data = [
             'title' => 'Shuffled Deck',
@@ -57,7 +57,7 @@ class CardController extends AbstractController
 
     public function draw(): Response
     {
-        $deck = new \App\Card\Deck();
+        $deck = new \App\Classes\Card\Deck();
         $currentDeck = $deck->getDeck();
         $numOfCards = 1;
         $deck->getRandomCards($currentDeck, $numOfCards);
@@ -75,13 +75,16 @@ class CardController extends AbstractController
 
     // Page card/deck/draw/:number that draws :number from deck and displays
     // - cardHand
-    // - leftOverDeck + length 
+    // - leftOverDeck + length
 
-    // Save deck in session when draw or draw/:number leftOverDeck should decrease until deck is empty. Rest with shuffle.
-    
-    // Create card/deck/deal/:players/:cards that deals :cards from :players and displays CardHand. Display leftOverDeck length. Tips player and cardHand class
+    // Save deck in session when draw or draw/:number
+    // leftOverDeck should decrease until deck is empty. Rest with shuffle.
 
-    // create card/deck2 which is a deck with two jokers. Display deck the same as card/deck. Tips try inheritance. Try to recreate Deck ex DeckWith2Jokers extends Deck.
+    // Create card/deck/deal/:players/:cards that deals :cards
+    // from :players and displays CardHand. Display leftOverDeck length.
+    // Tips player and cardHand class
 
-
+    // create card/deck2 which is a deck with two jokers.
+    // Display deck the same as card/deck. Tips try inheritance.
+    // Try to recreate Deck ex DeckWith2Jokers extends Deck.
 }

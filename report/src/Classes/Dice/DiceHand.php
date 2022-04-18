@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dice;
+namespace App\Classes\Dice;
 
 use App\Dice\Dice;
 
