@@ -15,9 +15,10 @@ class CardController extends AbstractController
      */
     public function home(): Response
     {
-        $deck = new \App\Card\Deck();
+        $numOfCards = 1;
         $data = [
-            'title' => 'Deck',
+            'title' => 'Deck-Home',
+            'link_to_draw' => $this->generateUrl('card-draw', ['numOfCards' => $numOfCards,]),
         ];
         return $this->render('card/home.html.twig', $data);
     }
@@ -41,6 +42,7 @@ class CardController extends AbstractController
     public function shuffle(): Response
     {
         $deck = new \App\Card\Deck();
+
         $data = [
             'title' => 'Shuffled Deck',
             'deck' => $deck->shuffleDeck(),
@@ -71,7 +73,8 @@ class CardController extends AbstractController
     }
 
     /**
-     * @Route("/card/deck/draw{numOfCards}", name="multiple-card-draw")
+     * @Route("/card/deck/draw{numOfCards}", name="card-draw")
+     * card/deck/draw/:number grab :number cards from deck and display them & remaining deck.
      */
 
     // public function drawMultiple(int $numOfCards): Response
@@ -83,13 +86,10 @@ class CardController extends AbstractController
     //     $leftOverDeck = $deck->getLeftOverDeck();
 
     //     $data = [
-    //         'title' => 'Draw Multiple cards',
-    //         'deck' => $currentDeck,
-    //         'playerHand' => $playerHand,
-    //         'leftOverDeck' => $leftOverDeck,
-    //         'numOfCards' => $numOfCards,
+    //         'title' => 'Draw multiple cards',
+    //         'deck' => $deck,
+    //         'numOfCards' => $numOfCards
     //     ];
-
     //     return $this->render('card/draw.html.twig', $data);
     // }
 }

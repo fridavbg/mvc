@@ -28,6 +28,7 @@ class DiceController extends AbstractController
     /**
      * @Route("/dice/roll/{numRolls}", name="dice-roll")
      */
+
     public function roll(int $numRolls): Response
     {
         $die = new \App\Dice\Dice();

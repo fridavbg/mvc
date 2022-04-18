@@ -47,11 +47,11 @@ class Card
      * Shows card value
      * @return string
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->value;
     }
-    
+
     /**
      * Show card suit
      * @return string
