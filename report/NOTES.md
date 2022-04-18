@@ -28,9 +28,12 @@ tools/php-codesniffer/vendor/bin/phpcs --standard=PSR12 src
 ```
 composer validate
 ```
+- <mark>csfix</mark> formats code so it looks the same all throughout all Symfony modules.
+ - <mark>phpcs</mark> checks the codestyle and provide warnings. 
+ - <mark>phpcbf</mark> fixes the codestyle
 
 ```
-composer csfix          -- Fix
+composer csfix          -- Fix codestyle / format
 composer phpcs          -- Check code standard
 composer phpcbf         -- Correct code standard
 ```

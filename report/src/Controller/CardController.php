@@ -52,6 +52,7 @@ class CardController extends AbstractController
 
     /**
      * @Route("/card/deck/draw", name="card-draw")
+     * Pull one card and display leftOverDeck length
      */
 
     public function draw(): Response
@@ -72,24 +73,15 @@ class CardController extends AbstractController
         return $this->render('card/draw.html.twig', $data);
     }
 
-    /**
-     * @Route("/card/deck/draw{numOfCards}", name="card-draw")
-     * card/deck/draw/:number grab :number cards from deck and display them & remaining deck.
-     */
+    // Page card/deck/draw/:number that draws :number from deck and displays
+    // - cardHand
+    // - leftOverDeck + length 
 
-    // public function drawMultiple(int $numOfCards): Response
-    // {
-    //     $deck = new \App\Card\Deck();
-    //     $currentDeck = $deck->getDeck();
-    //     $deck->getRandomCards($currentDeck, $numOfCards);
-    //     $playerHand = $deck->getCardHand();
-    //     $leftOverDeck = $deck->getLeftOverDeck();
+    // Save deck in session when draw or draw/:number leftOverDeck should decrease until deck is empty. Rest with shuffle.
+    
+    // Create card/deck/deal/:players/:cards that deals :cards from :players and displays CardHand. Display leftOverDeck length. Tips player and cardHand class
 
-    //     $data = [
-    //         'title' => 'Draw multiple cards',
-    //         'deck' => $deck,
-    //         'numOfCards' => $numOfCards
-    //     ];
-    //     return $this->render('card/draw.html.twig', $data);
-    // }
+    // create card/deck2 which is a deck with two jokers. Display deck the same as card/deck. Tips try inheritance. Try to recreate Deck ex DeckWith2Jokers extends Deck.
+
+
 }
