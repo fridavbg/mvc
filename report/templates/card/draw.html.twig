@@ -7,7 +7,6 @@
 {% block content %}
 	<div class="site-wrap">
 		<h2>Card Hand</h2>
-		{# {% if sessionCardHand | length > 0 %} #}
 		<div class="card-container">
 			{% for card in cardHand %}
 				<ul class="card">
@@ -27,10 +26,12 @@
 		<h3>Cards left in deck:
 			{{ leftOverDeck | length }}
 		</h3>
-		{# 
-		{% endif %}
-		#}
-		<form method="post" action={{link_to_draw}}">
+		<h3>You have 
+			{{ cardHand | length }}
+		</h3>
+		<form method="post" 
+		action={{link_to_draw}}"
+		>
 			<fieldset>
 				<p class="btn-container">
 					<input type="number" id="numOfCards" name="numOfCards" value="1" min="1" max="{{ leftOverDeck | length }}">
@@ -47,8 +48,8 @@
 			<h2>TEST BOX</h2>
 			{{dump(link_to_draw)}}
 			{{dump(cardsNumDrawn)}}
-			{{dump(sessionCardHand)}}
-			{{dump(sessionLeftOverDeck)}}
+			{{dump(cardHand)}}
+			{{dump(leftOverDeck)}}
 		</code>
 
 		<div class="btn-container">

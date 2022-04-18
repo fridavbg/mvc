@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use \App\Classes\Dice\Dice;
-
-
+use App\Classes\Dice\Dice;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

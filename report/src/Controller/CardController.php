@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use \App\Classes\Card\Deck;
-
+use App\Classes\Card\Deck;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,6 +67,7 @@ class CardController extends AbstractController
         $shuffle  = $request->request->get('shuffle');
         $cardsNumDrawn = $request->request->get('numOfCards');
         $draw = $request->request->get('draw');
+
         $cardHand = $deck->getCardHand();
         $leftOverDeck = $deck->getLeftOverDeck();
 
@@ -75,11 +75,17 @@ class CardController extends AbstractController
             $deck->getRandomCards($currentDeck, $cardsNumDrawn);
             $cardHand = $deck->getCardHand();
             $leftOverDeck = $deck->getLeftOverDeck();
-            $session->set("cardHand", $cardHand);
-            $session->set('leftOverDeck', $leftOverDeck);
+            // SESSION
+            // FIX link_to_draw
         } elseif ($draw) {
+            // $newCards = $deck->getRandomCards($leftOverDeck, $cardsNumDrawn);
+            // SESSION
+            // FIX link_to_draw
             $this->addFlash($cardsNumDrawn, "Numbers of cards picked $cardsNumDrawn");
         }
+
+        $session->set("cardHand", $cardHand);
+        $session->set('leftOverDeck', $leftOverDeck);
 
         $data = [
             'title' => 'Draw a card',
@@ -89,7 +95,7 @@ class CardController extends AbstractController
             'sessionCardHand' => $session->get('cardHand'),
             'sessionLeftOverDeck' => $session->get('leftOverDeck'),
             'cardsNumDrawn' => $cardsNumDrawn,
-            'link_to_draw' => $this->generateUrl('card-draw', ['cardsNumDrawn' => $cardsNumDrawn,]),
+            'link_to_draw' => $this->generateUrl('card-draw', ['cardsNumDrawn' => $cardsNumDrawn]),
         ];
         return $this->render('card/draw.html.twig', $data);
     }
@@ -102,8 +108,7 @@ class CardController extends AbstractController
      * )
      * Route to handle form inputs
      */
-
-    public function cardProcess(Request $request,  SessionInterface $session): Response
+    public function cardProcess(Request $request, SessionInterface $session): Response
     {
         $numOfCardsPicked = $request->request->get('numOfCards');
         // $deck = new Deck();
