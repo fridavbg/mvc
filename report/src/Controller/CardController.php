@@ -18,7 +18,6 @@ class CardController extends AbstractController
      */
     public function home(SessionInterface $session): Response
     {
-        $sessionCardHand = $session->get("cardHand") ?? 0;
         $data = [
             'title' => 'Deck-Home',
         ];
@@ -28,12 +27,14 @@ class CardController extends AbstractController
     /**
      * @Route("/card/deck", name="card-deck")
      */
-    public function deck(): Response
-    {
+    public function deck(
+        SessionInterface $session
+    ): Response {
         $deck = new Deck();
+
         $data = [
             'title' => 'Deck',
-            'deck' => $deck->getDeck()
+            'deck' => $deck->getDeck(),
         ];
         return $this->render('card/deck.html.twig', $data);
     }
@@ -64,20 +65,31 @@ class CardController extends AbstractController
         $deck = new Deck();
         $currentDeck = $deck->getDeck();
 
+        // FORM 
         $shuffle  = $request->request->get('shuffle');
-        $cardsNumToBeDrawn = $request->request->get('numOfCards');
+        $cardsNumDrawn = $request->request->get('numOfCards');
         $draw = $request->request->get('draw');
+
+        // GET DECK & HAND
         $cardHand = $deck->getCardHand();
         $leftOverDeck = $deck->getLeftOverDeck();
 
+        //SESSION
+        $sessionCardHand = $session->get("cardHand") ?? 0;
+
+
         if ($shuffle) {
-            $deck->getRandomCards($currentDeck, $cardsNumToBeDrawn);
+            $cardsNumDrawn = $request->request->get('numOfCards');
+            $deck->getRandomCards($currentDeck, $cardsNumDrawn);
             $cardHand = $deck->getCardHand();
             $leftOverDeck = $deck->getLeftOverDeck();
             $session->set("cardHand", $cardHand);
             $session->set('leftOverDeck', $leftOverDeck);
         } elseif ($draw) {
-            $this->addFlash($cardsNumToBeDrawn, "Numbers of cards picked $cardsNumToBeDrawn");
+
+            // add Cards to cardHand
+            // remove CardHand from LeftOverDeck
+            // update sessionVariables
         }
 
         $data = [
@@ -87,7 +99,8 @@ class CardController extends AbstractController
             'leftOverDeck' => $leftOverDeck,
             'sessionCardHand' => $session->get('cardHand'),
             'sessionLeftOverDeck' => $session->get('leftOverDeck'),
-            'cardsNumToBeDrawn' => $cardsNumToBeDrawn
+            'cardsNumDrawn' => $cardsNumDrawn,
+            'link_to_draw' => $this->generateUrl('card-draw', ['cardsNumDrawn' => $cardsNumDrawn,]),
         ];
         return $this->render('card/draw.html.twig', $data);
     }
@@ -103,14 +116,33 @@ class CardController extends AbstractController
 
     public function cardProcess(Request $request,  SessionInterface $session): Response
     {
-        $numOfCardsPicked = $request->request->get('numOfCards');
-        // $deck = new Deck();
-        // $deck->getRandomCards($currentDeck, $numOfCards);
-        // $currentDeck = $deck->getDeck();
-        // $newCardHand = $session->get('cardHand') ?? 0;
-        // $newLeftOverDeck = $session->get('leftOverDeck') ?? 0;
+        // GET FORM INPUT
+        $shuffle  = $request->request->get('shuffle');
+        $cardsNumToBeDrawn = $request->request->get('numOfCards');
+        $draw = $request->request->get('draw');
+        // DECK VALUES
+        $deck = new Deck();
+        $currentDeck = $deck->getDeck();
+        $cardHand = $deck->getCardHand();
+        $leftOverDeck = $deck->getLeftOverDeck();
 
-        $this->addFlash($numOfCardsPicked, "Numbers of cards picked");
+        // SESSION VALUES
+
+        // SHUFFLE BUTTON
+        if ($shuffle) {
+            $deck->getRandomCards($currentDeck, $cardsNumToBeDrawn);
+            $cardHand = $deck->getCardHand();
+            $leftOverDeck = $deck->getLeftOverDeck();
+            $session->set("cardHand", $cardHand);
+            $session->set('leftOverDeck', $leftOverDeck);
+        } // DRAW BUTTON
+        elseif ($draw) {
+            $cardsToAddToHand = $deck->getRandomCards($currentDeck, $cardsNumToBeDrawn);
+            $cardHand = $deck->setCardHand($cardsToAddToHand);
+            $session->set("cardHand", $cardHand);
+            $this->addFlash($cardsNumToBeDrawn, "Numbers of cards picked $cardsNumToBeDrawn");
+            $this->addFlash($cardsNumToBeDrawn, "Current cardHand $cardHand");
+        }
 
         return $this->redirectToRoute('card-draw');
     }
