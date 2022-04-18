@@ -9,9 +9,9 @@
 		<form method="post">
 			<fieldset>
 				<legend>Draw a card</legend>
-				{% if playerHand | length > 0 %}
+				{% if sessionCardHand | length > 0 %}
 					<div class="card-container">
-						{% for card in playerHand %}
+						{% for card in cardHand %}
 							<ul class="card">
 								{% if card.getSuite() == 'H'%}
 									<li class="red-suit">♥</li>
@@ -27,11 +27,11 @@
 						{% endfor %}
 					</div>
 					<h3>Cards left in deck:
-						{{ leftOverDeck | length }}
+						{{ sessionLeftOverDeck | length }}
 					</h3>
 				{% endif %}
 				<p class="btn-container">
-					<input type="number" id="numOfCards" name="numOfCards" value="1" min="1" max="{{ leftOverDeck | length }}">
+					<input type="number" id="numOfCards" name="numOfCards" value="1" min="1" max="{{ sessionLeftOverDeck | length }}">
 					<input type="submit" name="numOfCards" value="Draw multiple cards" class="btn">
 				</p>
 
@@ -41,8 +41,8 @@
 		<code class="code">
 			{{ include('flash-message.html.twig') }}
 			<h2>TEST BOX</h2>
-			{{dump(session)}}
-			{{dump(leftOverDeck)}}
+			{{dump(sessionCardHand)}}
+			{{dump(sessionLeftOverDeck)}}
 		</code>
 
 		<div class="btn-container">

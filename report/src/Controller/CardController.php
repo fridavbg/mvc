@@ -63,15 +63,20 @@ class CardController extends AbstractController
         $currentDeck = $deck->getDeck();
         $numOfCards = 1;
         $deck->getRandomCards($currentDeck, $numOfCards);
-        $playerHand = $deck->getCardHand();
+        $cardHand = $deck->getCardHand();
         $leftOverDeck = $deck->getLeftOverDeck();
+
+        $session->set("cardHand", $cardHand);
+        $session->set('leftOverDeck', $leftOverDeck);
 
         $data = [
             'title' => 'Draw a card',
             'deck' => $currentDeck,
-            'playerHand' => $playerHand,
+            'cardHand' => $cardHand,
             'leftOverDeck' => $leftOverDeck,
-            'session' => $session
+            'link_to_draw' => $this->generateUrl('card-draw', ['numOfCards' => $numOfCards,]),
+            'sessionCardHand' => $session->get('cardHand'),
+            'sessionLeftOverDeck' => $session->get('leftOverDeck')
         ];
         return $this->render('card/draw.html.twig', $data);
     }
