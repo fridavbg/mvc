@@ -13,6 +13,7 @@ class FormSearchController extends AbstractController
      * @Route("/form/search", name="form-search")
      * /form/search varför försvinner CSSen??
      */
+    
     public function search(Request $request): Response
     {
         $data = [

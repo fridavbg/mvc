@@ -57,39 +57,48 @@ class CardController extends AbstractController
      * Pull one card and display leftOverDeck length
      */
 
-    public function draw(SessionInterface $session): Response
-    {
+    public function draw(
+        Request $request,
+        SessionInterface $session
+    ): Response {
         $deck = new Deck();
         $currentDeck = $deck->getDeck();
-        $numOfCards = 1;
-        $deck->getRandomCards($currentDeck, $numOfCards);
+
+        $shuffle  = $request->request->get('shuffle');
+        $cardsNumToBeDrawn = $request->request->get('numOfCards');
+        $draw = $request->request->get('draw');
         $cardHand = $deck->getCardHand();
         $leftOverDeck = $deck->getLeftOverDeck();
 
-        $session->set("cardHand", $cardHand);
-        $session->set('leftOverDeck', $leftOverDeck);
+        if ($shuffle) {
+            $deck->getRandomCards($currentDeck, $cardsNumToBeDrawn);
+            $cardHand = $deck->getCardHand();
+            $leftOverDeck = $deck->getLeftOverDeck();
+            $session->set("cardHand", $cardHand);
+            $session->set('leftOverDeck', $leftOverDeck);
+        } elseif ($draw) {
+            $this->addFlash($cardsNumToBeDrawn, "Numbers of cards picked $cardsNumToBeDrawn");
+        }
 
         $data = [
             'title' => 'Draw a card',
             'deck' => $currentDeck,
             'cardHand' => $cardHand,
             'leftOverDeck' => $leftOverDeck,
-            'link_to_draw' => $this->generateUrl('card-draw', ['numOfCards' => $numOfCards,]),
             'sessionCardHand' => $session->get('cardHand'),
-            'sessionLeftOverDeck' => $session->get('leftOverDeck')
+            'sessionLeftOverDeck' => $session->get('leftOverDeck'),
+            'cardsNumToBeDrawn' => $cardsNumToBeDrawn
         ];
         return $this->render('card/draw.html.twig', $data);
     }
 
-    // Page card/deck/draw/:number that draws :number from deck and displays
-    // - cardHand
-    // - leftOverDeck + length
     /**
      * @Route(
      *      "/card/draw/",
      *      name="card-draw-process",
      *      methods={"POST"}
      * )
+     * Route to handle form inputs
      */
 
     public function cardProcess(Request $request,  SessionInterface $session): Response
@@ -105,6 +114,11 @@ class CardController extends AbstractController
 
         return $this->redirectToRoute('card-draw');
     }
+
+    // Page card/deck/draw/:number that draws :number from deck and displays
+    // - cardHand
+    // - leftOverDeck + length
+
 
     // Save deck in session when draw or draw/:number
     // leftOverDeck should decrease until deck is empty. Rest with shuffle.
