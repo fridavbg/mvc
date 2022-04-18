@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use \App\Classes\Card\Deck;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CardController extends AbstractController
@@ -13,12 +16,11 @@ class CardController extends AbstractController
     /**
      * @Route("/card", name="card-home")
      */
-    public function home(): Response
+    public function home(SessionInterface $session): Response
     {
-        $numOfCards = 1;
+        $sessionCardHand = $session->get("cardHand") ?? 0;
         $data = [
             'title' => 'Deck-Home',
-            'link_to_draw' => $this->generateUrl('card-draw', ['numOfCards' => $numOfCards,]),
         ];
         return $this->render('card/home.html.twig', $data);
     }
@@ -28,7 +30,7 @@ class CardController extends AbstractController
      */
     public function deck(): Response
     {
-        $deck = new \App\Classes\Card\Deck();
+        $deck = new Deck();
         $data = [
             'title' => 'Deck',
             'deck' => $deck->getDeck()
@@ -41,7 +43,7 @@ class CardController extends AbstractController
      */
     public function shuffle(): Response
     {
-        $deck = new \App\Classes\Card\Deck();
+        $deck = new Deck();
 
         $data = [
             'title' => 'Shuffled Deck',
@@ -55,9 +57,9 @@ class CardController extends AbstractController
      * Pull one card and display leftOverDeck length
      */
 
-    public function draw(): Response
+    public function draw(SessionInterface $session): Response
     {
-        $deck = new \App\Classes\Card\Deck();
+        $deck = new Deck();
         $currentDeck = $deck->getDeck();
         $numOfCards = 1;
         $deck->getRandomCards($currentDeck, $numOfCards);
@@ -69,6 +71,7 @@ class CardController extends AbstractController
             'deck' => $currentDeck,
             'playerHand' => $playerHand,
             'leftOverDeck' => $leftOverDeck,
+            'session' => $session
         ];
         return $this->render('card/draw.html.twig', $data);
     }
@@ -76,6 +79,27 @@ class CardController extends AbstractController
     // Page card/deck/draw/:number that draws :number from deck and displays
     // - cardHand
     // - leftOverDeck + length
+    /**
+     * @Route(
+     *      "/card/draw/",
+     *      name="card-draw-process",
+     *      methods={"POST"}
+     * )
+     */
+
+    public function cardProcess(Request $request,  SessionInterface $session): Response
+    {
+        $numOfCardsPicked = $request->request->get('numOfCards');
+        // $deck = new Deck();
+        // $deck->getRandomCards($currentDeck, $numOfCards);
+        // $currentDeck = $deck->getDeck();
+        // $newCardHand = $session->get('cardHand') ?? 0;
+        // $newLeftOverDeck = $session->get('leftOverDeck') ?? 0;
+
+        $this->addFlash($numOfCardsPicked, "Numbers of cards picked");
+
+        return $this->redirectToRoute('card-draw');
+    }
 
     // Save deck in session when draw or draw/:number
     // leftOverDeck should decrease until deck is empty. Rest with shuffle.

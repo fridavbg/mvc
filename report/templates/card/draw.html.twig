@@ -32,17 +32,16 @@
 				{% endif %}
 				<p class="btn-container">
 					<input type="number" id="numOfCards" name="numOfCards" value="1" min="1" max="{{ leftOverDeck | length }}">
-					<input type="submit" name="drawMultiple" value="Draw multiple cards" class="btn">
+					<input type="submit" name="numOfCards" value="Draw multiple cards" class="btn">
 				</p>
-
-				{# {{ include('block/flash-message.html.twig') }} #}
 
 			</fieldset>
 		</form>
 
 		<code class="code">
+			{{ include('flash-message.html.twig') }}
 			<h2>TEST BOX</h2>
-			{{dump(playerHand)}}
+			{{dump(session)}}
 			{{dump(leftOverDeck)}}
 		</code>
 
