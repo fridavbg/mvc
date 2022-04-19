@@ -20,8 +20,7 @@ class CardController extends AbstractController
         $session->clear();
         if (!$session->get("leftOverDeck")) 
         { 
-            $deck = new Deck();
-            $session->set("leftOverDeck", $deck);
+            $session->set("leftOverDeck", new Deck());
         };
 
         $data = [
@@ -66,12 +65,10 @@ class CardController extends AbstractController
         SessionInterface $session
     ): Response {
 
-        $session->get("leftOverDeck")->getCards(1);
-
         $data = [
             'title' => 'Draw a card',
-            'cardHand' => $session->get('cardHand'),
-            'leftOverDeck' => $session->get('leftOverDeck'),
+            'cardHand' => $session->get('leftOverDeck')->getCardsTest(1),
+            'leftOverDeck' => $session->get('leftOverDeck')->countDeck(),
         ];
         return $this->render('card/draw.html.twig', $data);
     }

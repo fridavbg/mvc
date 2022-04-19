@@ -79,6 +79,16 @@ class Deck
     }
 
     /**
+     * Get number of cards in current deck
+     * @return array
+     */
+    public function countDeck()
+    {
+        return count($this->cards);
+    }
+
+
+    /**
      * Grab N numbers of random cards from deck & update cardHand & leftOverDeck
      * @param $leftOverDeck array
      * @param $numberOfCards int
@@ -93,6 +103,25 @@ class Deck
         $this->setCardHand($drawnCards);
         $this->setDeck($this->cards);
 
-       // return $this->getDeck();
+        // return $this->getDeck();
+    }
+
+    public function getCardsTest($numberOfCards)
+    {
+        $drawnCards = [];
+        for ($i = 0; $i < $numberOfCards; $i++) {
+            array_push($drawnCards, array_shift($this->cards));
+        }
+
+        return $drawnCards;
+    }
+
+        /**
+     * Shows card value
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->value;
     }
 }
