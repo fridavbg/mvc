@@ -21,7 +21,7 @@ class Deck
         $values = array(
             'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'
         );
-        
+
         /**
          * Loop through to create Deck of cards
          */
@@ -53,7 +53,7 @@ class Deck
 
     /**
      * Show cardHand
-     * @return array
+     * @return arrays
      */
     public function getCardHand()
     {
@@ -92,5 +92,7 @@ class Deck
         }
         $this->setCardHand($drawnCards);
         $this->setDeck($this->cards);
+
+       // return $this->getDeck();
     }
 }

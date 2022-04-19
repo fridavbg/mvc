@@ -17,6 +17,7 @@ class CardController extends AbstractController
      */
     public function home(SessionInterface $session): Response
     {
+        $session->clear();
         if (!$session->get("leftOverDeck")) 
         { 
             $deck = new Deck();
@@ -65,7 +66,7 @@ class CardController extends AbstractController
         SessionInterface $session
     ): Response {
 
-        $session->set('cardHand', $session->get("leftOverDeck")->getCards(1));
+        $session->get("leftOverDeck")->getCards(1);
 
         $data = [
             'title' => 'Draw a card',
