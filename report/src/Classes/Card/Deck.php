@@ -9,7 +9,6 @@ class Deck
      * @var array representing deck excluding player cards picked
      */
     protected $cards; // DECK
-    private $leftOverCards; // CARDS LEFT IN DECK
     protected $cardHand; // CARDS DRAWN
 
     /**
@@ -72,36 +71,12 @@ class Deck
     }
 
     /**
-     * leftOverDeck Var Setter
-     * @param array $leftOverCards
-     */
-    public function setLeftOverDeck($leftOverCards)
-    {
-        $this->leftOverCards = $leftOverCards;
-    }
-
-    /**
-     * leftOverDeck Var Getter
-     * @return array $leftOverCards
-     */
-    public function getLeftOverDeck()
-    {
-        return $this->leftOverCards;
-    }
-
-    /**
      * Shuffle deck of cards
      * @return bool|array
      */
     public function shuffleDeck()
     {
-        $deckCards = $this->getDeck();
-        if (shuffle($deckCards)) {
-            $this->setDeck($deckCards);
-            return $deckCards;
-        } else {
-            return false;
-        }
+        shuffle($this->cards);
     }
 
     /**
@@ -110,14 +85,13 @@ class Deck
      * @param $numberOfCards int
      */
 
-    public function getRandomCards($leftOverDeck, $numberOfCards)
+    public function getRandomCards($numberOfCards)
     {
         $drawnCards = [];
-        shuffle($leftOverDeck);
         for ($i = 0; $i < $numberOfCards; $i++) {
-            array_push($drawnCards, array_shift($leftOverDeck));
+            array_push($drawnCards, array_shift($this->cards));
         }
         $this->setCardHand($drawnCards);
-        $this->setLeftOverDeck($leftOverDeck);
+        $this->setDeck($this->cards);
     }
 }

@@ -17,10 +17,10 @@ class CardController extends AbstractController
      */
     public function home(SessionInterface $session): Response
     {
+
         $deck = new Deck();
-        
         $cardHand = $deck->getCardHand();
-        $leftOverDeck = $deck->getLeftOverDeck();
+        $leftOverDeck = $deck->getDeck();
 
         $session->set("cardHand", $cardHand);
         $session->set('leftOverDeck', $leftOverDeck);
@@ -68,11 +68,11 @@ class CardController extends AbstractController
         SessionInterface $session
     ): Response {
         $deck = new Deck();
-        $currentDeck = $deck->getDeck();
-        $deck->getRandomCards($currentDeck, 1);
+        $deck->getRandomCards(1);
         $cardHand = $deck->getCardHand();
+        $leftOverDeck = $deck->getLeftOverDeck();
         $session->set("cardHand", $cardHand);
-        $session->set('leftOverDeck', $currentDeck);
+        $session->set('leftOverDeck', $leftOverDeck);
 
         $data = [
             'title' => 'Draw a card',
