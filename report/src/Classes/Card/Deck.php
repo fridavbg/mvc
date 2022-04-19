@@ -85,7 +85,7 @@ class Deck
      * @param $numberOfCards int
      */
 
-    public function getRandomCards($numberOfCards)
+    public function getCards($numberOfCards)
     {
         $drawnCards = [];
         for ($i = 0; $i < $numberOfCards; $i++) {

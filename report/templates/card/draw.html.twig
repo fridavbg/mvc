@@ -29,11 +29,9 @@
 		<h3>You have 
 			{{ cardHand | length }}
 		</h3>
-		<form method="post">
+		<form>
 			<fieldset>
 				<p class="btn-container">
-					<input type="number" id="numOfCards" name="numOfCards" value="1" min="1" max="{{ leftOverDeck | length }}">
-
 					<input type="submit" name="shuffle" value="Shuffle new deck" class="btn">
 
 					<input type="submit" name="draw" value="Draw cards" class="btn">
@@ -44,9 +42,9 @@
 		<code class="code">
 			{{ include('flash-message.html.twig') }}
 			<h2>TEST BOX</h2>
+			{# 
 			{{dump(cardHand)}}
 			{{dump(leftOverDeck)}}
-			{# 
 			{{dump(link_to_draw)}}
 			{{dump(cardsNumDrawn)}}
 			#}
