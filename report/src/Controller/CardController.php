@@ -17,13 +17,14 @@ class CardController extends AbstractController
      */
     public function home(SessionInterface $session): Response
     {
-        if (!$session->get("LeftOverDeck") 
+        if (!$session->get("leftOverDeck")) 
         { 
-            $session->set("LeftOverDeck", new Deck())
-        }
-        
+            $deck = new Deck();
+            $session->set("leftOverDeck", $deck);
+        };
+
         $data = [
-            'title' => 'Deck-Home',
+            'title' => 'Deck-Home'
         ];
         return $this->render('card/home.html.twig', $data);
     }
@@ -61,15 +62,14 @@ class CardController extends AbstractController
      */
 
     public function draw(
-        Request $request,
         SessionInterface $session
     ): Response {
 
-
+        $session->set('cardHand', $session->get("leftOverDeck")->getCards(1));
 
         $data = [
             'title' => 'Draw a card',
-            'cardHand' => $session->get('cardHand')->getCards(1),
+            'cardHand' => $session->get('cardHand'),
             'leftOverDeck' => $session->get('leftOverDeck'),
         ];
         return $this->render('card/draw.html.twig', $data);
