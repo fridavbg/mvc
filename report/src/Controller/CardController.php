@@ -22,7 +22,7 @@ class CardController extends AbstractController
         if (!$session->get("leftOverDeck")) 
         { 
             $session->set("leftOverDeck", new Deck());
-            $session->set("cardHand", [new Deck()]);
+            $session->set("cardHand", []);
         };
 
         $data = [
@@ -70,10 +70,14 @@ class CardController extends AbstractController
 
         $shuffle  = $request->request->get('shuffle');
 
+        $this->addFlash(
+            'warning', 'No cards left in the deck'
+        );
+        
         if ($shuffle) 
         { 
-            $session->get("leftOverDeck");
-            $session->set("cardHand", [new Deck()]);
+            $session->get("leftOverDeck")->buildDeck();
+            $session->set("cardHand", []);
         };
 
         $data = [
@@ -82,35 +86,6 @@ class CardController extends AbstractController
             'leftOverDeck' => $session->get('leftOverDeck')->getDeck(),
         ];
         return $this->render('card/draw.html.twig', $data);
-    }
-
-    /**
-     * @Route(
-     *      "/card/draw/",
-     *      name="card-draw-process",
-     *      methods={"POST"}
-     * )
-     * Route to handle form inputs
-     */
-    public function cardProcess(
-        Request $request, 
-        SessionInterface $session): Response
-    {
-        $numOfCardsPicked = $request->request->get('numOfCards');
-        // $deck = new Deck();
-        // $deck->getRandomCards($currentDeck, $numOfCards);
-        // $currentDeck = $deck->getDeck();
-        // $newCardHand = $session->get('cardHand') ?? 0;
-        // $newLeftOverDeck = $session->get('leftOverDeck') ?? 0;
-
-        // // FORM 
-        // $shuffle  = $request->request->get('shuffle');
-        // $cardsNumDrawn = $request->request->get('numOfCards');
-        // $draw = $request->request->get('draw');
-
-        $this->addFlash($numOfCardsPicked, "Numbers of cards picked");
-
-        return $this->redirectToRoute('card-draw');
     }
 
     // Page card/deck/draw/:number that draws :number from deck and displays

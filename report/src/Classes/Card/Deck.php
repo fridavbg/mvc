@@ -27,6 +27,7 @@ class Deck
 
     /**
      * Loop through to create Deck of cards
+     * @return array
      */
     public function buildDeck()
     {
