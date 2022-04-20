@@ -70,7 +70,7 @@ class CardController extends AbstractController
 
         $data = [
             'title' => 'Draw a card',
-            'cardHand' => $session->get('leftOverDeck')->getCardsTest(1),
+            'cardHand' => $session->get('leftOverDeck')->getCards(1),
             'leftOverDeck' => $session->get('leftOverDeck')->getDeck(),
         ];
         return $this->render('card/draw.html.twig', $data);

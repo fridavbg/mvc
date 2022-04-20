@@ -76,37 +76,16 @@ class Deck
      */
     public function shuffleDeck()
     {
-        shuffle($this->cards);
+        $deckCards = $this->getDeck();
+        if (shuffle($deckCards)) {
+            $this->setDeck($deckCards);
+            return $deckCards;
+        } else {
+            return false;
+        }
     }
-
-    /**
-     * Get number of cards in current deck
-     * @return array
-     */
-    public function countDeck()
-    {
-        return count($this->cards);
-    }
-
-    /**
-     * Grab N numbers of random cards from deck & update cardHand & leftOverDeck
-     * @param $leftOverDeck array
-     * @param $numberOfCards int
-     */
 
     public function getCards($numberOfCards)
-    {
-       // $drawnCards = [];
-        for ($i = 0; $i < $numberOfCards; $i++) {
-            array_push($this->cardHand, array_shift($this->cards));
-        }
-        $this->setCardHand($this->cardHand);
-        $this->setDeck($this->cards);
-
-        return $this->getDeck();
-    }
-
-    public function getCardsTest($numberOfCards)
     {
         $drawnCards = [];
         shuffle($this->cards);
@@ -118,5 +97,5 @@ class Deck
         $this->setCardHand($updatedDeck);
         $this->setDeck($this->cards);
         return $this->getCardHand();
-    }
+    } 
 }
