@@ -32,16 +32,20 @@
 		<form>
 			<fieldset>
 				<p class="btn-container">
+				{% if leftOverDeck | length == 0 %}
+					<p>There are no more cards left in the deck<p/>
 					<input type="submit" name="shuffle" value="Shuffle new deck" class="btn">
+				{% else %}
 					<input type="submit" name="draw" value="Draw one more card" class="btn">
+				{% endif %}
 				</p>
 			</fieldset>
 		</form>
 
 		<code class="code">
 			<h2>TEST BOX</h2>
-			 {{dump(cardHand)}}
-			 {{dump(leftOverDeck)}}
+			{{dump(cardHand)}}
+			{{dump(leftOverDeck)}}
 		</code>
 
 		<div class="btn-container">

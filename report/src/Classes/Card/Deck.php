@@ -18,21 +18,27 @@ class Deck
     {
         $this->cardHand = array();
         $this->cards = array();
-        $suits = array('H', 'C', 'D', 'S');
-        $values = array(
+        $this->suits = array('H', 'C', 'D', 'S');
+        $this->values = array(
             'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'
         );
+        $this->buildDeck();
+    }
 
-        /**
-         * Loop through to create Deck of cards
-         */
-        foreach ($suits as $suit) {
-            foreach ($values as $value) {
+    /**
+     * Loop through to create Deck of cards
+     */
+    public function buildDeck()
+    {
+        foreach ($this->suits as $suit) {
+            foreach ($this->values as $value) {
                 $card = new Card($suit, $value);
                 array_push($this->cards, $card);
             }
         }
+        return $this->cards;
     }
+
 
     /**
      * Show Deck of cards
@@ -76,14 +82,28 @@ class Deck
      */
     public function shuffleDeck()
     {
-        $deckCards = $this->getDeck();
-        if (shuffle($deckCards)) {
-            $this->setDeck($deckCards);
-            return $deckCards;
+        if (shuffle($this->cards)) {
+            $this->setDeck($this->cards);
+            return $this->getDeck();
         } else {
             return false;
         }
     }
+
+    /**
+     * Count cards in deck
+     * @return array
+     */
+    public function countDeck()
+    {
+        return count($this->cards);
+    }
+
+    /**
+     * Grab N numbers of random cards from deck & update cardHand & leftOverDeck
+     * @param $numberOfCards int
+     * @return $cardHand array
+     */
 
     public function getCards($numberOfCards)
     {
@@ -97,5 +117,5 @@ class Deck
         $this->setCardHand($updatedDeck);
         $this->setDeck($this->cards);
         return $this->getCardHand();
-    } 
+    }
 }

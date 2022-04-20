@@ -68,6 +68,14 @@ class CardController extends AbstractController
         SessionInterface $session
     ): Response {
 
+        $shuffle  = $request->request->get('shuffle');
+
+        if ($shuffle) 
+        { 
+            $session->get("leftOverDeck");
+            $session->set("cardHand", [new Deck()]);
+        };
+
         $data = [
             'title' => 'Draw a card',
             'cardHand' => $session->get('leftOverDeck')->getCards(1),
