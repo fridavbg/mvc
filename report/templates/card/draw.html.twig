@@ -24,7 +24,7 @@
 			{% endfor %}
 		</div>
 		<h3>Cards left in deck:
-			{{ leftOverDeck }}
+			{{ leftOverDeck | length }}
 		</h3>
 		<h3>You have 
 			{{ cardHand | length }}
@@ -33,18 +33,15 @@
 			<fieldset>
 				<p class="btn-container">
 					<input type="submit" name="shuffle" value="Shuffle new deck" class="btn">
-
-					<input type="submit" name="draw" value="Draw cards" class="btn">
+					<input type="submit" name="draw" value="Draw one more card" class="btn">
 				</p>
 			</fieldset>
 		</form>
 
 		<code class="code">
-			{{ include('flash-message.html.twig') }}
 			<h2>TEST BOX</h2>
 			 {{dump(cardHand)}}
-						 {{dump(leftOverDeck)}}
-
+			 {{dump(leftOverDeck)}}
 		</code>
 
 		<div class="btn-container">

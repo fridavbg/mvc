@@ -16,6 +16,7 @@ class Deck
      */
     public function __construct()
     {
+        $this->cardHand = array();
         $this->cards = array();
         $suits = array('H', 'C', 'D', 'S');
         $values = array(
@@ -87,7 +88,6 @@ class Deck
         return count($this->cards);
     }
 
-
     /**
      * Grab N numbers of random cards from deck & update cardHand & leftOverDeck
      * @param $leftOverDeck array
@@ -96,32 +96,27 @@ class Deck
 
     public function getCards($numberOfCards)
     {
-        $drawnCards = [];
+       // $drawnCards = [];
         for ($i = 0; $i < $numberOfCards; $i++) {
-            array_push($drawnCards, array_shift($this->cards));
+            array_push($this->cardHand, array_shift($this->cards));
         }
-        $this->setCardHand($drawnCards);
+        $this->setCardHand($this->cardHand);
         $this->setDeck($this->cards);
 
-        // return $this->getDeck();
+        return $this->getDeck();
     }
 
     public function getCardsTest($numberOfCards)
     {
         $drawnCards = [];
+        shuffle($this->cards);
         for ($i = 0; $i < $numberOfCards; $i++) {
             array_push($drawnCards, array_shift($this->cards));
         }
-
-        return $drawnCards;
-    }
-
-        /**
-     * Shows card value
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->value;
+        $currentCardHand = $this->getCardHand();
+        $updatedDeck = array_merge($currentCardHand, $drawnCards);
+        $this->setCardHand($updatedDeck);
+        $this->setDeck($this->cards);
+        return $this->getCardHand();
     }
 }

@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CardController extends AbstractController
 {
@@ -17,10 +16,13 @@ class CardController extends AbstractController
      */
     public function home(SessionInterface $session): Response
     {
+        $session->start();
         $session->clear();
+
         if (!$session->get("leftOverDeck")) 
         { 
             $session->set("leftOverDeck", new Deck());
+            $session->set("cardHand", [new Deck()]);
         };
 
         $data = [
@@ -62,13 +64,14 @@ class CardController extends AbstractController
      */
 
     public function draw(
+        Request $request,
         SessionInterface $session
     ): Response {
 
         $data = [
             'title' => 'Draw a card',
             'cardHand' => $session->get('leftOverDeck')->getCardsTest(1),
-            'leftOverDeck' => $session->get('leftOverDeck')->countDeck(),
+            'leftOverDeck' => $session->get('leftOverDeck')->getDeck(),
         ];
         return $this->render('card/draw.html.twig', $data);
     }
@@ -81,7 +84,9 @@ class CardController extends AbstractController
      * )
      * Route to handle form inputs
      */
-    public function cardProcess(Request $request, SessionInterface $session): Response
+    public function cardProcess(
+        Request $request, 
+        SessionInterface $session): Response
     {
         $numOfCardsPicked = $request->request->get('numOfCards');
         // $deck = new Deck();
