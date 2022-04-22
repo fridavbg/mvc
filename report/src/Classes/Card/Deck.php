@@ -9,14 +9,12 @@ class Deck
      * @var array representing deck excluding player cards picked
      */
     protected $cards; // DECK
-    protected $cardHand; // CARDS DRAWN
 
     /**
      * Create a deck of 52 cards
      */
     public function __construct()
     {
-        $this->cardHand = array();
         $this->cards = array();
         $suits = array('H', 'C', 'D', 'S');
         $values = array(
@@ -32,13 +30,14 @@ class Deck
                 array_push($this->cards, $card);
             }
         }
+        shuffle($this->cards);
     }
 
     /**
      * Show Deck of cards
      * @return array
      */
-    public function getDeck()
+    public function getCards()
     {
         return $this->cards;
     }
@@ -47,27 +46,9 @@ class Deck
      * Deck Var Setter
      * @param mixed $deck
      */
-    public function setDeck($cards)
+    public function setCards($cards)
     {
         $this->cards = $cards;
-    }
-
-    /**
-     * Show cardHand
-     * @return arrays
-     */
-    public function getCardHand()
-    {
-        return $this->cardHand;
-    }
-
-    /**
-     * cardHand Var Setter
-     * @param array $deck
-     */
-    public function setCardHand($cards)
-    {
-        $this->cardHand = $cards;
     }
 
     /**
@@ -76,34 +57,30 @@ class Deck
      */
     public function shuffleDeck()
     {
-        $deckCards = $this->getDeck();
+        $deckCards = $this->getCards();
         if (shuffle($deckCards)) {
-            $this->setDeck($deckCards);
+            $this->setCards($deckCards);
             return $deckCards;
         }
+        // $deckCards is empty
     }
 
     /**
-     * Grab N numberOfCards of random cards from deck & update cardHand & leftOverDeck
+     * Grab N numberOfCards of random cards from deck & update leftOverDeck
      * @param int
      * @return array
      */
 
-    public function getCards($numberOfCards)
+    public function drawCards($numberOfCards)
     {
         $drawnCards = [];
 
         shuffle($this->cards);
         for ($i = 0; $i < $numberOfCards; $i++) {
-            array_push($drawnCards, array_shift($this->cards));
+            if (count($this->cards) > 0) {
+                array_push($drawnCards, array_shift($this->cards));
+            }
         }
-
-        $currentCardHand = $this->getCardHand();
-        $updatedDeck = array_merge($currentCardHand, $drawnCards);
-
-        $this->setCardHand($updatedDeck);
-        $this->setDeck($this->cards);
-        
-        return $this->getCardHand();
+        return $drawnCards;
     }
 }

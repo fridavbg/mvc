@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Classes\Card\Deck;
+use App\Classes\Card\Player;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,10 +21,8 @@ class CardController extends AbstractController
         $session->start();
         $session->clear();
 
-        if (!$session->get("leftOverDeck")) {
-            $session->set("leftOverDeck", new Deck());
-            $session->set("cardHand", [new Deck()]);
-        };
+        $session->set("deck", new Deck());
+        $session->set("player", new Player());
 
         $data = [
             'title' => 'Deck-Home'
@@ -38,32 +38,46 @@ class CardController extends AbstractController
         $deck = new Deck();
         $data = [
             'title' => 'Deck',
-            'deck' => $deck->getDeck()
+            'deck' => $deck->getCards()
         ];
         return $this->render('card/deck.html.twig', $data);
     }
 
     /**
      * @Route("/card/deck/shuffle", name="card-shuffle")
-     * Shuffle leftOverDeck []
+     * Shuffle deck []
      * If deck is empty, reset - new deck []
      */
-    public function shuffle(): Response
-    {
-        $deck = new Deck();
+    public function shuffle(
+        SessionInterface $session
+    ): Response {
+
+
+        $deck = $session->get('deck')->getCards();
+
+        if(count($deck) == 0) {
+            $deck = $session->set('deck', new Deck());
+            $player = $session->set('player', new Player());
+            $player->drawCardsFromDeck(1, $deck);
+        }
+
+        $deck = $session->get('deck')->getCards();
+        $player = $session->get('player');
 
         $data = [
             'title' => 'Shuffled Deck',
-            'deck' => $deck->shuffleDeck(),
+            'cardHand' => $session->get('player')->getCardHand(),
+            'deck' => $deck,
+
         ];
-        return $this->render('card/deck.html.twig', $data);
+        return $this->render('card/draw.html.twig', $data);
     }
 
     /**
      * @Route("/card/deck/draw", name="card-draw")
-     * Pull one card and display leftOverDeck length [x]
+     * Pull one card and display deck length [x]
      * When deck is empty, reset with /shuffle []
-     *  Save deck in session when draw or draw/:number is called update cardHand & leftOverDeck []
+     *  Save deck in session when draw or draw/:number is called update cardHand & deck [x]
      */
 
     public function draw(
@@ -71,13 +85,20 @@ class CardController extends AbstractController
         SessionInterface $session
     ): Response {
 
-        // if leftOverDeck is empty 
-        $this->addFlash("info", "No cards in deck");
+        $currentDeck = $session->get('deck');
+        $session->get('player')->drawCardsFromDeck(1, $currentDeck);
+
+        if (count($currentDeck->getCards()) <= 0) {
+            $session->set('deck', new Deck());
+            $session->set('player', new Player());
+            $session->get('player')->drawCardsFromDeck(1, $currentDeck);
+        } 
 
         $data = [
             'title' => 'Draw a card',
-            'cardHand' => $session->get('leftOverDeck')->getCards(1),
-            'leftOverDeck' => $session->get('leftOverDeck')->getDeck(),
+            'deck' => $currentDeck->getCards(),
+            'cardHand' => $session->get('player')->getCardHand(),
+            // 'player' => $session->get('player')->getPlayerNum()
         ];
         return $this->render('card/draw.html.twig', $data);
     }
@@ -85,9 +106,9 @@ class CardController extends AbstractController
     /**
      * @Route("/card/deck/draw/:number", name="card-multiple-draw")
      * Take user input of cards to be drawn [] 
-     * update cardHand & leftOverDeck []
+     * update cardHand & deck []
      * When deck is empty, reset with /shuffle []
-     * Save deck in session when draw or draw/:number is called update cardHand & leftOverDeck []
+     * Save deck in session when draw or draw/:number is called update cardHand & deck []
      */
 
     public function drawMultiple(
@@ -105,7 +126,7 @@ class CardController extends AbstractController
      * @Route("/card/deck/deal/:players/:cards ", name="card-players")
      * Pull N card and give to N player []
      * Display each player cardHand []
-     * Display length of leftOverDeck []
+     * Display length of deck []
      * When deck is empty, reset with /shuffle []
      * Tips player and cardHand class
      */
@@ -123,7 +144,7 @@ class CardController extends AbstractController
     /**
      * @Route("/card/deck2/", name="card-deck2")
      * Display deck the same as card/deck. Tips try inheritance.
-     *  Try to recreate Deck ex DeckWith2Jokers extends Deck.
+     * Try to recreate Deck ex DeckWith2Jokers extends Deck.
      */
     public function deck2(
         Request $request,
@@ -131,6 +152,25 @@ class CardController extends AbstractController
     ): Response {
         $data = [
             'title' => 'WIP',
+        ];
+        return $this->render('card/draw.html.twig', $data);
+    }
+
+    /**
+     * @Route("/card/deck/reset", name="card-reset")
+     * Reset deck & clear session
+     */
+
+    public function reset(
+        SessionInterface $session
+    ): Response {
+        $session->start();
+        $session->clear();
+        $session->set("deck", new Deck());
+        $session->set("player", new Player());
+
+        $data = [
+            'title' => 'Reset',
         ];
         return $this->render('card/draw.html.twig', $data);
     }
