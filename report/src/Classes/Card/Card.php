@@ -44,7 +44,7 @@ class Card
     }
 
     /**
-     * Shows card value
+     * Shows value as a string
      * @return string
      */
     public function __toString(): string

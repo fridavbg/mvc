@@ -18,28 +18,21 @@ class Deck
     {
         $this->cardHand = array();
         $this->cards = array();
-        $this->suits = array('H', 'C', 'D', 'S');
-        $this->values = array(
+        $suits = array('H', 'C', 'D', 'S');
+        $values = array(
             'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'
         );
-        $this->buildDeck();
-    }
 
-    /**
-     * Loop through to create Deck of cards
-     * @return array
-     */
-    public function buildDeck()
-    {
-        foreach ($this->suits as $suit) {
-            foreach ($this->values as $value) {
+        /**
+         * Loop through to create Deck of cards
+         */
+        foreach ($suits as $suit) {
+            foreach ($values as $value) {
                 $card = new Card($suit, $value);
                 array_push($this->cards, $card);
             }
         }
-        return $this->cards;
     }
-
 
     /**
      * Show Deck of cards
@@ -83,40 +76,30 @@ class Deck
      */
     public function shuffleDeck()
     {
-        if (shuffle($this->cards)) {
-            $this->setDeck($this->cards);
-            return $this->getDeck();
-        } else {
-            return false;
-        }
+        shuffle($this->cards);
     }
 
     /**
-     * Count cards in deck
+     * Grab N numberOfCards of random cards from deck & update cardHand & leftOverDeck
+     * @param int
      * @return array
-     */
-    public function countDeck()
-    {
-        return count($this->cards);
-    }
-
-    /**
-     * Grab N numbers of random cards from deck & update cardHand & leftOverDeck
-     * @param $numberOfCards int
-     * @return $cardHand array
      */
 
     public function getCards($numberOfCards)
     {
         $drawnCards = [];
+
         shuffle($this->cards);
         for ($i = 0; $i < $numberOfCards; $i++) {
             array_push($drawnCards, array_shift($this->cards));
         }
+
         $currentCardHand = $this->getCardHand();
         $updatedDeck = array_merge($currentCardHand, $drawnCards);
+
         $this->setCardHand($updatedDeck);
         $this->setDeck($this->cards);
+        
         return $this->getCardHand();
     }
 }
