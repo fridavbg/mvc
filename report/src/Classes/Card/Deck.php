@@ -72,11 +72,15 @@ class Deck
 
     /**
      * Shuffle deck of cards
-     * @return bool|array
+     * @return array
      */
     public function shuffleDeck()
     {
-        shuffle($this->cards);
+        $deckCards = $this->getDeck();
+        if (shuffle($deckCards)) {
+            $this->setDeck($deckCards);
+            return $deckCards;
+        }
     }
 
     /**

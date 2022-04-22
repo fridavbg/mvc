@@ -45,7 +45,7 @@ class CardController extends AbstractController
 
     /**
      * @Route("/card/deck/shuffle", name="card-shuffle")
-     * Shuffle remaining deck []
+     * Shuffle leftOverDeck []
      * If deck is empty, reset - new deck []
      */
     public function shuffle(): Response
