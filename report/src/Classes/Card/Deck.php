@@ -96,6 +96,7 @@ class Deck
             $this->setDeck($deckCards);
             return $deckCards;
         }
+        return shuffle($deckCards);
     }
 
     /**

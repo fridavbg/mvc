@@ -54,6 +54,7 @@ class CardController extends AbstractController
 
         if ($deck === NULL) {
             $session->set("leftOverDeck", new Deck());
+            $deck = $session->get('leftOverDeck');
             $session->set("cardHand", [new Deck()]);
         }
 
