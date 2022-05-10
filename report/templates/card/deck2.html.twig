@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{title}}
+{% endblock %}
+
+{% block content %}
+  <div class="site-wrap">
+    <h1>{{ title }}</h1>
+    <div class="card-container">
+      {# {{dump(deck[0].getValue())}}
+            {{dump(deck[0].getSuite())}} #}
+      {% for key, card in deck %}
+        <ul class="card">
+          {% if card.getSuite() == 'H'%}
+            <li class="red-suit">♥</li>
+          {% elseif card.getSuite() == 'S'%}
+            <li class="black-suit">♠</li>
+          {% elseif card.getSuite() == 'C'%}
+            <li class="black-suit">♣</li>
+          {% elseif card.getSuite() == 'D'%}
+            <li class="red-suit">♦</li>
+          {% else %}
+            <li class="red-suit">&#127183;</li>
+          {% endif %}
+          <li>{{ card.getValue() }}</li>
+        </ul>
+      {% endfor %}
+    </div>
+
+    <div class="btn-container">
+      <a href="{{path("card-home")}}" class="btn">Go back</a>
+    </div>
+  </div>
+{% endblock %}

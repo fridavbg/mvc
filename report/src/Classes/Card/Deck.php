@@ -5,7 +5,7 @@ namespace App\Classes\Card;
 class Deck
 {
     /**
-     * @var array representing full deck of cards
+     * @var array representing full deck of cards with Jokers
      * @var array representing deck excluding player cards picked
      */
     protected $cards; // DECK

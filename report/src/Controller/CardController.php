@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Classes\Card\Deck;
-use phpDocumentor\Reflection\Types\Integer;
+use App\Classes\Card\Deck2;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -128,7 +128,21 @@ class CardController extends AbstractController
         return $this->render('card/drawMultipleWithPlayers.html.twig', $data);
     }
 
-    // create card/deck2 which is a deck with two jokers.
-    // Display deck the same as card/deck. Tips try inheritance.
-    // Try to recreate Deck ex DeckWith2Jokers extends Deck.
+    /**
+     * @Route("/card/deck2", name="card-deck2")
+     * create card/deck2 which is a deck with two jokers.
+     * Display deck the same as card/deck. Tips try inheritance.
+     * Try to recreate Deck ex DeckWith2Jokers extends Deck.
+     */
+    public function deckWithJokers(): Response
+    {
+        $deck = new Deck2();
+        $deck->jokers();
+
+        $data = [
+            'title' => 'Deck with Jokers',
+            'deck' => $deck->getDeck()
+        ];
+        return $this->render('card/deck2.html.twig', $data);
+    }
 }
