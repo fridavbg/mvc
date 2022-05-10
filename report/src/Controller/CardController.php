@@ -53,11 +53,10 @@ class CardController extends AbstractController
         $deck = $session->get('leftOverDeck');
 
         if ($deck === NULL) {
-            if (!$session->get("leftOverDeck")) {
-                $session->set("leftOverDeck", new Deck());
-                $session->set("cardHand", [new Deck()]);
-            };
+            $session->set("leftOverDeck", new Deck());
+            $session->set("cardHand", [new Deck()]);
         }
+
         $data = [
             'title' => 'Shuffled Deck',
             'deck' => $deck->shuffleDeck(),
@@ -105,9 +104,29 @@ class CardController extends AbstractController
         return $this->render('card/drawMultiple.html.twig', $data);
     }
 
-    // Create card/deck/deal/:players/:cards that deals :cards
-    // from :players and displays CardHand. Display leftOverDeck length.
-    // Tips player and cardHand class
+    /**
+     * @Route("/card/deck/deal/{numOfPlayers}/{numOfCards}", name="deal", methods={"GET","POST"})
+     * Display N cardsHands with N Cards 
+     * display leftOverDeck length
+     */
+
+    public function deal(
+        Request $request,
+        SessionInterface $session,
+        String $numOfCards,
+        String $numOfPlayers,
+    ): Response {
+
+        $numOfPlayers = $request->request->get('players');
+        $numOfCards = $request->request->get('cards');
+
+        $data = [
+            'title' => 'Draw multiple card with players',
+            'cardHand' => $session->get('leftOverDeck')->getCards(intval($numOfCards)),
+            'cards' => $session->get('leftOverDeck')->getDeck(),
+        ];
+        return $this->render('card/drawMultipleWithPlayers.html.twig', $data);
+    }
 
     // create card/deck2 which is a deck with two jokers.
     // Display deck the same as card/deck. Tips try inheritance.
