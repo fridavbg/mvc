@@ -38,7 +38,7 @@
           </fieldset>
         </form>
       {% else %}
-        <form action="shuffle" method="POST">
+        <form action="/card/deck/shuffle" method="POST">
           <fieldset>
             <div class="btn-container">
               {{ include('flash-message.html.twig') }}
@@ -48,13 +48,13 @@
         </fieldset>
       </form>
 
-     {#
+    
       <code class="code">
         <h2>TEST BOX</h2>
-        {{dump(cardHand)}}
         {{dump(cards)}}
+        {{dump(cardHand)}}
       </code>
-     #}
+    
 
       <div class="btn-container">
         <a href="{{path("card-home")}}" class="btn">

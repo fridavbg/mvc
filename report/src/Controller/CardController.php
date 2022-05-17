@@ -14,6 +14,7 @@ class CardController extends AbstractController
 {
     /**
      * @Route("/card", name="card-home")
+     * Landing page for all the endpoints
      */
     public function home(SessionInterface $session): Response
     {
@@ -33,6 +34,7 @@ class CardController extends AbstractController
 
     /**
      * @Route("/card/deck", name="card-deck")
+     * Display full deck sorted by color and suite
      */
     public function deck(): Response
     {
@@ -46,32 +48,33 @@ class CardController extends AbstractController
 
     /**
      * @Route("/card/deck/shuffle", name="card-shuffle")
+     * Show full shuffled deck
+     * Reset empty deck
      */
     public function shuffle(
         SessionInterface $session
     ): Response {
-        $deck = $session->get('leftOverDeck');
 
-        if ($deck === NULL) {
-            $session->set("leftOverDeck", new Deck());
-            $deck = $session->get('leftOverDeck');
-            $session->set("cardHand", [new Deck()]);
-        }
+        $deck = new Deck();
+        $session->set("leftOverDeck", $deck);
+        $session->set("cardHand",  $deck->getCardHand());
 
         $data = [
             'title' => 'Shuffled Deck',
             'deck' => $deck->shuffleDeck(),
+            'cardHand' => $deck->getCardHand(),
         ];
+
         return $this->render('card/deck.html.twig', $data);
     }
 
     /**
      * @Route("/card/deck/draw", name="card-draw",  methods={"GET","POST"})
-     * Pull one card and display leftOverDeck length
+     * Pull one card and display cardHand
+     * display size of leftOverDeck 
      */
 
     public function draw(
-        Request $request,
         SessionInterface $session
     ): Response {
 
@@ -85,8 +88,8 @@ class CardController extends AbstractController
 
     /**
      * @Route("/card/deck/drawMultiple/{numOfCards}", name="card-draw-multiple", methods={"GET","POST"})
-     * Pull N cards and display leftOverDeck length
-     * 
+     * Pull N cards and display cardHand
+     * Display leftOverDeck length
      */
 
     public function drawMultiple(
@@ -107,8 +110,8 @@ class CardController extends AbstractController
 
     /**
      * @Route("/card/deck/deal/{numOfPlayers}/{numOfCards}", name="deal", methods={"GET","POST"})
-     * Display N cardsHands with N Cards 
-     * display leftOverDeck length
+     * Display N player with N Cards (cardHand)
+     * display size of leftOverDeck
      */
 
     public function deal(

@@ -8,8 +8,8 @@ class Deck
      * @var array representing full deck of cards with Jokers
      * @var array representing deck excluding player cards picked
      */
-    protected $cards; // DECK
-    protected $cardHand; // CARDS DRAWN
+    protected $cards; 
+    protected $cardHand;
 
     /**
      * Create a deck of 52 cards
