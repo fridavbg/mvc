@@ -8,8 +8,8 @@ class Deck
      * @var array representing full deck of cards with Jokers
      * @var array representing deck excluding player cards picked
      */
-    protected $cards; 
-    protected $cardHand;
+    protected $cards; // DECK
+    protected $cardHand; // CARDS DRAWN
 
     /**
      * Create a deck of 52 cards
@@ -86,7 +86,7 @@ class Deck
 
     /**
      * Shuffle deck of cards
-     * @return bool|array
+     * @return array
      */
     public function shuffleDeck()
     {
@@ -117,5 +117,19 @@ class Deck
         $this->setCardHand($updatedDeck);
         $this->setDeck($this->cards);
         return $this->getCardHand();
+    }
+
+    /**
+     * Return each card as a Object
+     */
+    public function getJson()
+    {
+        $jsonDeck = [];
+        $deckCards = $this->getDeck();
+        foreach($deckCards as $card) {
+            array_push($jsonDeck, $card->getCardObj());
+        }
+
+        return json_encode($jsonDeck, JSON_PRETTY_PRINT);
     }
 }

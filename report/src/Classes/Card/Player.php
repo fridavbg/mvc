@@ -4,29 +4,36 @@ namespace App\Classes\Card;
 
 class Player
 {
-
-    private $cardHand;
-
-    public function __construct()
+    /**
+     * Rules of the Game
+     * Track num of players
+     */
+    
+    public function __construct($numOfPlayers, $numOfCards)
     {
-        $this->cardHand = array();
+        $this->cards = $numOfCards;
+        $this->players = $numOfPlayers;
+        $this->deck = new Deck();
+        $this->playersWithCardHands = array();
+        $this->amountOfDrawnCards = $numOfCards * $numOfPlayers;
     }
 
-    /**
-     * Show cardHand
-     * @return arrays
-     */
-    public function getCardHand()
+    public function startGame()
     {
-        return $this->cardHand;
-    }
-
-    /**
-     * cardHand Var Setter
-     * @param array $cards
-     */
-    public function setCardHand($cards)
-    {
-        $this->cardHand = $cards;
+        $cardHands = [];
+        for ($i = 0; $i < $this->players; $i++) {
+            // Shuffle Deck
+            $this->deck->shuffleDeck();
+            // Draw Cards to card Hand
+            $drawnCards = $this->deck->getCards($this->cards);
+            $updateDeck = $this->deck->getDeck();
+            if ($i < 1) {
+                array_push($cardHands, $drawnCards);
+            } else if ($i >= 1) {
+                array_push($cardHands, array_splice($drawnCards, $this->cards * $i));
+            }
+            // Update deck 
+        }
+        return $cardHands;
     }
 }

@@ -28,7 +28,9 @@ body {
 }
 
 .code {
+    background-color: black;
     margin: 12px;
+    width: 400px;
 }
 
 /* HEADER */
@@ -386,6 +388,26 @@ legend {
     font-size: 25px;
     padding-bottom: 3px;
 }
+
+/* Player */
+.player-container {
+    display: grid;
+    grid-template-rows: 100px 100px;
+    grid-gap: 12px;
+    justify-content: center;
+    padding-bottom: 12px;
+}
+
+.cardHand {
+    display: grid;
+    grid-template-columns: 180px auto auto auto auto auto auto auto;
+    grid-gap: 0.5em;
+}
+
+.player-title {
+    margin-right: 1em;
+}
+
 
 /* FOOTER */
 .sitefooter {

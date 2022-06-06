@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Classes\Card\Deck;
 use App\Classes\Card\Deck2;
+use App\Classes\Card\Player;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,6 @@ class CardController extends AbstractController
 {
     /**
      * @Route("/card", name="card-home")
-     * Landing page for all the endpoints
      */
     public function home(SessionInterface $session): Response
     {
@@ -34,7 +34,6 @@ class CardController extends AbstractController
 
     /**
      * @Route("/card/deck", name="card-deck")
-     * Display full deck sorted by color and suite
      */
     public function deck(): Response
     {
@@ -48,8 +47,6 @@ class CardController extends AbstractController
 
     /**
      * @Route("/card/deck/shuffle", name="card-shuffle")
-     * Show full shuffled deck
-     * Reset empty deck
      */
     public function shuffle(
         SessionInterface $session
@@ -70,8 +67,7 @@ class CardController extends AbstractController
 
     /**
      * @Route("/card/deck/draw", name="card-draw",  methods={"GET","POST"})
-     * Pull one card and display cardHand
-     * display size of leftOverDeck 
+     * Pull one card and display leftOverDeck length
      */
 
     public function draw(
@@ -82,14 +78,15 @@ class CardController extends AbstractController
             'title' => 'Draw a card',
             'cardHand' => $session->get('leftOverDeck')->getCards(1),
             'cards' => $session->get('leftOverDeck')->getDeck(),
+
         ];
         return $this->render('card/draw.html.twig', $data);
     }
 
     /**
      * @Route("/card/deck/drawMultiple/{numOfCards}", name="card-draw-multiple", methods={"GET","POST"})
-     * Pull N cards and display cardHand
-     * Display leftOverDeck length
+     * Pull N cards and display leftOverDeck length
+     * 
      */
 
     public function drawMultiple(
@@ -110,8 +107,8 @@ class CardController extends AbstractController
 
     /**
      * @Route("/card/deck/deal/{numOfPlayers}/{numOfCards}", name="deal", methods={"GET","POST"})
-     * Display N player with N Cards (cardHand)
-     * display size of leftOverDeck
+     * Display N cardsHands with N Cards 
+     * display leftOverDeck length
      */
 
     public function deal(
@@ -124,13 +121,21 @@ class CardController extends AbstractController
         $numOfPlayers = $request->request->get('players');
         $numOfCards = $request->request->get('cards');
 
+        $session->set("players", new Player($numOfPlayers, $numOfCards));
+
         $data = [
             'title' => 'Draw multiple card with players',
-            'cardHand' => $session->get('leftOverDeck')->getCards(intval($numOfCards)),
-            'cards' => $session->get('leftOverDeck')->getDeck(),
+            'players' => $session->get('players')->startGame(),
+            'cards' => $session->get('players')->deck->getDeck()
+            /// NOT WORKING
+        //     'link_to_game' => $this->generateUrl('deal', [
+        //         'numOfPlayers' => $numOfPlayers,
+        //         'numOfCards' => $numOfCards
+        //         ])
         ];
         return $this->render('card/drawMultipleWithPlayers.html.twig', $data);
     }
+
 
     /**
      * @Route("/card/deck2", name="card-deck2")
