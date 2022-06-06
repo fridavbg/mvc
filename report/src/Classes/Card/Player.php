@@ -15,7 +15,7 @@ class Player
         $this->players = $numOfPlayers;
         $this->deck = new Deck();
         $this->playersWithCardHands = array();
-        $this->amountOfDrawnCards = $numOfCards * $numOfPlayers;
+        $this->amountOfDrawnCards = intval($numOfCards) * intval($numOfPlayers);
     }
 
     public function startGame()

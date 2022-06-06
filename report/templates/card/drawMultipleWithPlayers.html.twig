@@ -33,10 +33,7 @@
     <h3>Cards left in deck:
       {{ cards | length }}
     </h3>
-    {% if players | length == 0 %}
-      {#
-    action = "{{link_to_game}}"
-#}
+    {% if players | length >= 0 %}
       <form action="deal" method="POST">
         <fieldset>
           <div class="btn-container">

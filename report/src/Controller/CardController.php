@@ -132,7 +132,7 @@ class CardController extends AbstractController
         //         'numOfPlayers' => $numOfPlayers,
         //         'numOfCards' => $numOfCards
         //         ])
-        ];
+    ];
         return $this->render('card/drawMultipleWithPlayers.html.twig', $data);
     }
 
