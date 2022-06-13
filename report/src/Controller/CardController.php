@@ -106,18 +106,35 @@ class CardController extends AbstractController
     }
 
     /**
-     * @Route("/card/deck/deal/{numOfPlayers}/{numOfCards}", name="deal", methods={"GET","POST"})
+     * @Route("/card/deck/deal", name="deal", methods={"GET"})
      * Display N cardsHands with N Cards 
      * display leftOverDeck length
      */
 
     public function deal(
+        SessionInterface $session,
+    ): Response {   
+
+        $data = [
+            'title' => 'Draw multiple card with players'
+    ];
+        return $this->render('card/drawMultipleWithPlayersForm.html.twig', $data);
+    }
+
+
+    /**
+     * @Route("/card/deck/deal/{numOfPlayers}/{numOfCards}", name="deal-process", methods={"POST"})
+     * Display N cardsHands with N Cards 
+     * display leftOverDeck length
+     */
+
+    public function dealProcess(
         Request $request,
         SessionInterface $session,
         String $numOfCards,
         String $numOfPlayers,
     ): Response {
-
+        // dd($request);
         $numOfPlayers = $request->request->get('players');
         $numOfCards = $request->request->get('cards');
 
@@ -126,16 +143,15 @@ class CardController extends AbstractController
         $data = [
             'title' => 'Draw multiple card with players',
             'players' => $session->get('players')->startGame(),
-            'cards' => $session->get('players')->deck->getDeck()
+            'cards' => $session->get('players')->deck->getDeck(),
             /// NOT WORKING
-        //     'link_to_game' => $this->generateUrl('deal', [
-        //         'numOfPlayers' => $numOfPlayers,
-        //         'numOfCards' => $numOfCards
-        //         ])
+            'link_to_game' => $this->generateUrl('deal', [
+                'players' => $numOfPlayers,
+                'cards' => $numOfCards
+                ])
     ];
         return $this->render('card/drawMultipleWithPlayers.html.twig', $data);
     }
-
 
     /**
      * @Route("/card/deck2", name="card-deck2")

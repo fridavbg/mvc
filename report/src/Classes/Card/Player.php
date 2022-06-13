@@ -32,7 +32,6 @@ class Player
             } else if ($i >= 1) {
                 array_push($cardHands, array_splice($drawnCards, $this->cards * $i));
             }
-            // Update deck 
         }
         return $cardHands;
     }
