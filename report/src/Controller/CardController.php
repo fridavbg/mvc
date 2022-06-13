@@ -113,11 +113,11 @@ class CardController extends AbstractController
 
     public function deal(
         SessionInterface $session,
-    ): Response {   
+    ): Response {
 
         $data = [
             'title' => 'Draw multiple card with players'
-    ];
+        ];
         return $this->render('card/drawMultipleWithPlayersForm.html.twig', $data);
     }
 
@@ -144,12 +144,13 @@ class CardController extends AbstractController
             'title' => 'Draw multiple card with players',
             'players' => $session->get('players')->startGame(),
             'cards' => $session->get('players')->deck->getDeck(),
-            /// NOT WORKING
+            // how to add to URL ??
             'link_to_game' => $this->generateUrl('deal', [
                 'players' => $numOfPlayers,
                 'cards' => $numOfCards
-                ])
-    ];
+            ])
+        ];
+        // return $this->redirectToRoute('deal', ["players" => $session->get("players"), "cards" => $session->get("cards")]);
         return $this->render('card/drawMultipleWithPlayers.html.twig', $data);
     }
 
