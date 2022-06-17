@@ -7,13 +7,13 @@
 {% block content %}
   <div class="site-wrap">
 
-    <form action="/card/deck/deal/{players}/{cards}" method="post">
+    <form action="/card/deck/deal/numOfPlayers/numOfCards" method="post">
       <fieldset>
         <div class="btn-container">
           <legend>Players:</legend>
-          <input type="number" id="players" name="players" min="1" max="7">
+          <input type="number" id="numOfPlayers" name="numOfPlayers" min="1" max="7">
           <legend>Cards:</legend>
-          <input type="number" id="cards" name="cards" min="1" max="52">
+          <input type="number" id="numOfCards" name="numOfCards" min="1" max="52">
           <input type="submit" name="deal-process" value="Start the game" class="btn"/>
         </div>
       </fieldset>
