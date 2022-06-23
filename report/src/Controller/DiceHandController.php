@@ -47,8 +47,8 @@ class DiceHandController extends AbstractController
         if ($roll) {
             $hand->roll();
         } elseif ($add) {
-            $hand->add(new Dice());
-        // $hand->add(new DiceGraphic());
+            // $hand->add(new Dice());
+            $hand->add(new DiceGraphic());
         } elseif ($clear) {
             $hand = new DiceHand();
         }
