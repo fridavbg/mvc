@@ -19,8 +19,20 @@ class GameController extends AbstractController
         $session->clear();
 
         $data = [
-            'title' => 'Game-Home'
+            'title' => 'Black jack'
         ];
         return $this->render('game/game.html.twig', $data);
+    }
+
+    /**
+     * @Route("/gamePlan", name="game-plan")
+     */
+    public function plan(SessionInterface $session): Response
+    {
+
+        $data = [
+            'title' => 'Start Black jack'
+        ];
+        return $this->render('game/gamePlan.html.twig', $data);
     }
 }
