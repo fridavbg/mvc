@@ -8,25 +8,12 @@
   <div class="site-wrap">
     {% if players is defined %}
       <div class="player-container">
-        {% for cardHand in players %}
+        {% for player in players %}
           <div class="cardHand">
             <h2 class="player-title">Player
               {{loop.index}}
             </h2>
-            {% for card in cardHand %}
-              <ul class="card">
-                {% if card.getSuite() == 'H'%}
-                  <li class="red-suit">♥</li>
-                {% elseif card.getSuite() == 'S'%}
-                  <li class="black-suit">♠</li>
-                {% elseif card.getSuite() == 'C'%}
-                  <li class="black-suit">♣</li>
-                {% else %}
-                  <li class="red-suit">♦</li>
-                {% endif %}
-                <li>{{ card.getValue() }}</li>
-              </ul>
-            {% endfor %}
+            {{dump(player)}}
           </div>
         {% endfor %}
       </div>
@@ -38,12 +25,11 @@
       </p>
     {% endif %}
 
-    {#
-      <code class="code">
+    {#   #}
+    <code class="code">
       <h2>TEST BOX</h2>
       {{dump(players)}}
     </code>
-      #}
 
     <div class="btn-container">
       <a href="{{path("card-home")}}" class="btn">
