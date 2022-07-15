@@ -1,0 +1,11 @@
+PHPUnit 9.5.21 #StandWithUkraine
+
+...                                                                 3 / 3 (100%)
+
+Time: 00:00.208, Memory: 10.00 MB
+
+OK (3 tests, 8 assertions)
+
+Generating code coverage report in Clover XML format ... done [00:00.016]
+
+Generating code coverage report in HTML format ... done [00:00.058]

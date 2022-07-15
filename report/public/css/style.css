@@ -297,7 +297,7 @@ p {
     border-radius: 12px;
 }
 
-/* FORM */
+/* FORN */
 
 .errorMsg {
     border: solid red 2px;
@@ -329,7 +329,6 @@ legend {
 .btn-container {
     display: flex;
     justify-content: space-around;
-    margin-top: 1em;
 }
 
 .btn {

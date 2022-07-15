@@ -2,7 +2,7 @@
 
 namespace App\Classes\Dice;
 
-use App\Classes\Dice\Dice;
+use App\Dice\Dice;
 
 class DiceHand
 {

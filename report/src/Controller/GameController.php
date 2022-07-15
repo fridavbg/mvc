@@ -2,16 +2,13 @@
 
 namespace App\Controller;
 
-use App\Classes\Card\Deck;
-use App\Classes\Card\Card;
-use App\Classes\Game\CardHandManager;
-use App\Classes\Game\GameManager;
 use App\Classes\Game\Blackjack;
-use App\Classes\Game\Player;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class GameController extends AbstractController
 {
@@ -48,21 +45,65 @@ class GameController extends AbstractController
 
 
     /**
-     * @Route("/gamePlan", name="game-plan")
+     * @Route("/game/plan", name="game-plan", methods={"GET"})
+     * Page to play the game
+     * Renders player & dealer information
      */
     public function plan(SessionInterface $session): Response
     {
         $game = $session->get('blackjack');
-
+        $player = $game->getPlayerRepo()->findByType('Player');
+        $dealer = $game->getPlayerRepo()->findByType('Dealer');
         $data = [
             'title' => 'Black jack',
             'blackjack' => $game,
-            'dealer' => $game->dealer->getPlayer(),
-            'player'  => $game->player->getPlayer(),
-            'dealerWins' => $game->dealer->getTotalWins(),
-            'playerWins' => $game->player->getTotalWins(),
+            'dealer' => $dealer->type,
+            'player'  => $player->type,
+            'dealerWins' => $dealer->getTotalWins(),
+            'playerWins' => $player->getTotalWins(),
+            'playerHand' => $player->getCurrentCardHand(),
+            'dealerHand' => $dealer->getCurrentCardHand(),
+            'cardsLeftInDeck' => $game->getCurrentDeck(),
+            'playerPoints' => $player->getCurrentScore(),
+            'dealerPoints' => $dealer->getCurrentScore(),
+            'playerActive' => $player->isActive()
         ];
         return $this->render('game/plan.html.twig', $data);
+    }
+
+    /**
+     * @Route("/game/plan", name="draw-process", methods={"POST"})
+     * Draws a card to a players CardHand
+     */
+    public function handleButtons(
+        Request $request,
+        SessionInterface $session
+    ): Response {
+
+        // BUTTONS
+        $playerDraw = $request->request->get('player');
+        $playerStand = $request->request->get('player-stop');
+        $dealerDraw = $request->request->get('dealer');
+        $dealerStand = $request->request->get('dealer-stop');
+
+        $game = $session->get('blackjack');
+        $player = $game->getPlayerRepo()->findByType('Player');
+        $dealer = $game->getPlayerRepo()->findByType('Dealer');
+
+        // Button Actions
+        if ($playerDraw) {
+            $player->draw($game->getDeck());
+            $player->calculateCardHand();
+        } elseif ($dealerDraw) {
+            $dealer->draw($game->getDeck());
+            $dealer->calculateCardHand();
+        } elseif ($playerStand) {
+            $player->stop();
+        } elseif ($dealerStand) {
+            $game->blackjack();
+        };
+
+        return $this->redirectToRoute('game-plan');
     }
 
     /**
@@ -71,12 +112,11 @@ class GameController extends AbstractController
     public function test(SessionInterface $session): Response
     {
         $game = $session->get('blackjack');
+
         $data = [
-            'title' => 'TEST Black jack',
-            // SAME HANDS . . .
-            'playerHand' => $game->player->draw($game->deck),
-            'dealerHand' => $game->dealer->draw($game->deck),
-            'deck' => $game->deck->getDeck(),
+            'title' => 'Black jack TEST',
+            'blackjack' => $game->players->findByType('Player')->getCurrentCardHand(),
+            'dealer' => $game->players->findByType('Dealer'),
         ];
         return $this->render('game/test.html.twig', $data);
     }

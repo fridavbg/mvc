@@ -9,20 +9,29 @@ class Deck
      * @var array representing deck excluding player cards picked
      */
     protected $cards; // DECK
-  //  protected $cardHand; // CARDS DRAWN
+    protected $cardHand; // CARDS DRAWN
 
     /**
      * Create a deck of 52 cards
      */
     public function __construct()
     {
-       // $this->cardHand = array();
+        $this->cardHand = array();
         $this->cards = array();
-        $this->suits = array('H', 'C', 'D', 'S');
-        $this->values = array(
+        $suits = array('H', 'C', 'D', 'S');
+        $values = array(
             'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'
         );
-        $this->createDeck();
+
+        /**
+         * Loop through to create Deck of cards
+         */
+        foreach ($suits as $suit) {
+            foreach ($values as $value) {
+                $card = new Card($suit, $value);
+                array_push($this->cards, $card);
+            }
+        }
     }
 
     /**
@@ -57,23 +66,23 @@ class Deck
         $this->cards = $cards;
     }
 
-    // /**
-    //  * Show cardHand
-    //  * @return arrays
-    //  */
-    // public function getCardHand()
-    // {
-    //     return $this->cardHand;
-    // }
+    /**
+     * Show cardHand
+     * @return arrays
+     */
+    public function getCardHand()
+    {
+        return $this->cardHand;
+    }
 
-    // /**
-    //  * cardHand Var Setter
-    //  * @param array $deck
-    //  */
-    // public function setCardHand($cards)
-    // {
-    //     $this->cardHand = $cards;
-    // }
+    /**
+     * cardHand Var Setter
+     * @param array $deck
+     */
+    public function setCardHand($cards)
+    {
+        $this->cardHand = $cards;
+    }
 
     /**
      * Shuffle deck of cards
@@ -81,19 +90,19 @@ class Deck
      */
     public function shuffleDeck()
     {
-        $cards = $this->getDeck();
+        $deckCards = $this->getDeck();
 
-        if (shuffle($cards)) {
-            $this->setDeck($cards);
-            return $cards;
+        if (shuffle($deckCards)) {
+            $this->setDeck($deckCards);
+            return $deckCards;
         }
-        return shuffle($cards);
+        return shuffle($deckCards);
     }
 
     /**
-     * Grab N numbers of random cards from deck & update leftOverDeck
+     * Grab N numbers of random cards from deck & update cardHand & leftOverDeck
+     * @param $leftOverDeck array
      * @param $numberOfCards int
-     * @return cardHand array
      */
 
     public function getCards($numberOfCards)
@@ -103,26 +112,10 @@ class Deck
         for ($i = 0; $i < $numberOfCards; $i++) {
             array_push($drawnCards, array_shift($this->cards));
         }
-        // remove cardHand from deck
-        // $currentCardHand = $this->getCardHand();
-        // $updatedDeck = array_merge($currentCardHand, $drawnCards);
-        // $this->setCardHand($updatedDeck);
-        // return $this->getCardHand();
+        $currentCardHand = $this->getCardHand();
+        $updatedDeck = array_merge($currentCardHand, $drawnCards);
+        $this->setCardHand($updatedDeck);
         $this->setDeck($this->cards);
-
-        return $drawnCards;
-    }
-
-    /**
-     * Return each card as a Object
-     */
-    public function getJson()
-    {
-        $jsonDeck = [];
-        $deckCards = $this->getDeck();
-        foreach ($deckCards as $card) {
-            array_push($jsonDeck, $card->getCardObj());
-        }
-        return json_encode($jsonDeck, JSON_PRETTY_PRINT);
+        return $this->getCardHand();
     }
 }

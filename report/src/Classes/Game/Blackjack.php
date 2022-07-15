@@ -3,16 +3,46 @@
 namespace App\Classes\Game;
 
 use App\Classes\Card\Deck;
+use App\Classes\Card\Card;
+use App\Classes\Game\PlayerRepository;
 
 class Blackjack
 {
-    public $blackjack = 21;
+    protected PlayerRepository $playerRepo;
+    protected Deck $deck;
 
     public function __construct()
     {
-        $this->player = new Player();
-        $this->dealer = new Player('dealer');
+        $this->playerRepo = new PlayerRepository();
+        $this->playerRepo->createPlayer('Player');
+        $this->playerRepo->createPlayer('Dealer');
         $this->deck = new Deck();
+    }
+
+    /**
+     * Getter for Deck Object
+     * @return Deck
+     */
+    public function getDeck(): Deck
+    {
+        return $this->deck;
+    }
+    /**
+     * Getter for active deck
+     * @return array<Card>
+     */
+    public function getCurrentDeck(): array
+    {
+        return $this->deck->getDeck();
+    }
+
+    /**
+     * Getter for players
+     * @return object
+     */
+    public function getPlayerRepo(): object
+    {
+        return $this->playerRepo;
     }
 
     /**
@@ -23,7 +53,34 @@ class Blackjack
      */
     public function reset()
     {
-        $this->player->clearCurrentHand();
-        $this->dealer->clearCurrentHand();
+        $player = $this->playerRepo->findByType('Player');
+        $dealer = $this->playerRepo->findByType('Dealer');
+        $player->clearCurrentHand();
+        $player->activate();
+        $dealer->clearCurrentHand();
+        $this->deck = new Deck();
+    }
+
+    /**
+     * Determine which player has blackJack
+     * @static
+     * @access public
+     * @return void
+     */
+    public function blackJack()
+    {
+        $player = $this->playerRepo->findByType('Player');
+        $dealer = $this->playerRepo->findByType('Dealer');
+        $playerPoints = $player->getCurrentScore();
+        $dealerPoints = $dealer->getCurrentScore();
+
+        if ($playerPoints > 21) {
+            $dealer->win();
+        } elseif ($playerPoints == 21 || $dealerPoints > 21) {
+            $player->win();
+        } elseif ($dealerPoints >= $playerPoints) {
+            $dealer->win();
+        }
+        $this->reset();
     }
 }
