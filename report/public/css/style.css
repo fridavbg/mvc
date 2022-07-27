@@ -241,6 +241,23 @@ nav ul li a:hover {
     padding: 1em;
 }
 
+.report-link {
+    font-family: Font;
+    font-size: medium;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0.5em;
+    border-radius: 12px;
+    color: var(--light-text);
+    box-shadow: var(--accent) 0px 20px 30px -10px;
+    background-color: var(--accent);
+}
+
+.report-link:hover {
+    background-color: var(--dark-bkg);
+    border-radius: 12px;
+}
+
 /* TYPOGRAPHY */
 @font-face {
     font-family: Title;
@@ -297,7 +314,18 @@ p {
     border-radius: 12px;
 }
 
-/* FORN */
+/* FORM */
+
+form {
+    padding: 20px;
+    width:100%;
+}
+
+input, textarea {
+    margin: 1em;
+    width: 100%;
+    padding: 0.5em;
+}
 
 .errorMsg {
     border: solid red 2px;
@@ -317,17 +345,18 @@ p {
     box-shadow: 0 5px 0 rgb(8, 8, 236);
 }
 
-legend {
+label {
     text-decoration: underline;
     font-size: 20px;
     color: var(--light-grey);
     letter-spacing: 0.1em;
-    margin-top: 1em;
+    margin: 1em;
     font-family: Title;
 }
 
 .btn-container {
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
 }
 
@@ -389,7 +418,7 @@ legend {
     padding-bottom: 3px;
 }
 
-/* Player */
+/* PLAYER */
 .player-container {
     display: grid;
     grid-template-rows: 100px 100px;
@@ -409,6 +438,59 @@ legend {
 }
 
 
+/*LIBRARY*/
+.book-frame {
+    margin: 1em;
+    display: grid
+}
+
+.book-container {
+    border-style: groove;
+    box-shadow: 15px 10px #000;
+    border-radius: 1em;
+    padding: 1em;
+    margin: 1em;
+    display: grid;
+    grid-template-areas: 
+    'header header footer'
+    'left left right'
+    'main image image'
+    'main image image'
+}
+
+.title {
+    grid-area: header;
+    font-size: 32px;
+    border: 3px solid #000;
+}
+
+.author {
+    grid-area: left;
+}
+
+.isbn {
+    grid-area: right;
+}
+
+.description {
+    grid-area: main;
+}
+
+.book-image {
+    grid-area: image;
+    border-style: groove;
+    box-shadow: 15px 10px #000;
+    margin: .5em;
+    width: 250px;
+    height: 300px;
+    border-radius: 1em;
+}
+
+.btns {
+    grid-area: footer;
+    padding: 1em;
+}
+
 /* FOOTER */
 .sitefooter {
     background-image: var(--gradient-green);
@@ -418,6 +500,7 @@ legend {
     position: relative;
     z-index: 1;
     margin-bottom: 1em;
+    margin-top: 3em;
 }
 
 .sitefooter p {
