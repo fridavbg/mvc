@@ -1,1 +1,0 @@
-{"buildTargets":["all","check-version","clean","clean-all","install","phpunit","prepare","test"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}
