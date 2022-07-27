@@ -35,8 +35,6 @@ class Guess
         }
     }
 
-
-
     /**
      * Randomize the secret number between 1 and 100 to initiate a new game.
      *

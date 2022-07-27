@@ -56,7 +56,7 @@ class Player implements PlayerActions
         for ($i = 0; $i < $numOfCards; $i++) {
             //   57     Cannot call method getValue() on object|null. ???
             $cardValue = $cardHand[$i]->getValue();
-           // dd($cardHand[$i]);
+            // dd($cardHand[$i]);
             if (in_array($cardValue, ['A', 'J', 'Q', 'K'])) {
                 $points += 11;
             }
@@ -98,10 +98,23 @@ class Player implements PlayerActions
     /**
      * Activate player
      * @access public
+     * @return void
      */
     public function activate(): void
     {
         $this->playerActive = true;
+    }
+
+    /**
+     * Switch from player to dealer
+     * @access public
+     * @return void
+     */
+    public function stop()
+    {
+        if ($this->type === 'Player') {
+            $this->playerActive = false;
+        };
     }
 
     /**
@@ -136,18 +149,6 @@ class Player implements PlayerActions
         array_push($newCardHand, $drawnCard);
         $updatedCardHand = array_merge($newCardHand, $currentCardHand);
         $this->setCurrentCardHand($updatedCardHand);
-    }
-
-    /**
-     * Switch from player to dealer
-     * @access public
-     * @return void
-     */
-    public function stop()
-    {
-        if ($this->type === 'Player') {
-            $this->playerActive = false;
-        };
     }
 
     /**
